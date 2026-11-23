@@ -80,7 +80,7 @@ class EquipePage extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          'LM',
+                          'FM',
                           style: GoogleFonts.bebasNeue(
                             fontSize: 38,
                             color: AppTheme.secondary,
@@ -92,7 +92,7 @@ class EquipePage extends StatelessWidget {
                     const SizedBox(height: 14),
 
                     Text(
-                      'Lucas Melhado',
+                      'Felipe Melhado',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.montserrat(
                         fontSize: 22,

@@ -122,7 +122,7 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
                     style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
                       labelText: 'Nome do Sócio / Cliente',
-                      hintText: 'Ex.: Lucas Melhado',
+                      hintText: 'Ex.: Felipe Melhado',
                       prefixIcon: Icon(Icons.person_pin_outlined, color: AppTheme.primary),
                     ),
                   ),

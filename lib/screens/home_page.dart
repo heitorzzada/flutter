@@ -116,7 +116,7 @@ class HomePage extends StatelessWidget {
                   _buildNavTile(
                     icon: Icons.groups_outlined,
                     title: 'Curadoria & Equipe',
-                    subtitle: 'Conheça Lucas Melhado e a equipe de cinéfilos da locadora',
+                    subtitle: 'Conheça Felipe Melhado e a equipe de cinéfilos da locadora',
                     onTap: () {
                       Navigator.push(
                         context,

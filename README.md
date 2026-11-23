@@ -5,7 +5,7 @@ Projeto mobile desenvolvido em **Flutter** e integrado ao **Cloud Firestore** na
 ---
 
 ## 👥 Curadoria & Responsável pelo Projeto
-- **Curador & Desenvolvedor:** **Lucas Melhado**
+- **Curador & Desenvolvedor:** **Felipe Melhado**
 - **Atuação:** Gestão do Acervo Cinematográfico & Arquitetura do Aplicativo em Flutter
 - **Especialidades do Acervo:** Ficção Científica, Cinema Cult, Clássicos dos Anos 80 e 90, Suspense
 
@@ -25,7 +25,7 @@ Projeto mobile desenvolvido em **Flutter** e integrado ao **Cloud Firestore** na
    - Vitrine de Acesso Rápido às duas coleções do Firestore.
 
 2. **`EquipePage` (Curadoria & Equipe)**:
-   - Apresentação de **Lucas Melhado** como gerente de curadoria do acervo e desenvolvedor do app.
+   - Apresentação de **Felipe Melhado** como gerente de curadoria do acervo e desenvolvedor do app.
    - Chips de gêneros favoritos, atuação na modelagem de dados e regras do Firestore.
 
 3. **`ObjetivosPage` (Regulamento de Locação)**:
