@@ -9,6 +9,41 @@ import 'cadastro_atividade_page.dart';
 class ListaAtividadePage extends StatelessWidget {
   const ListaAtividadePage({super.key});
 
+  void _showSuccessPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppTheme.secondaryBackground,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: AppTheme.primary, width: 1.5),
+        ),
+        title: Row(
+          children: const [
+            Icon(Icons.check_circle, color: AppTheme.primary, size: 28),
+            SizedBox(width: 10),
+            Text('Sucesso!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: AppTheme.primary)),
+          ],
+        ),
+        content: const Text(
+          'Cadastro realizado com sucesso!',
+          style: TextStyle(fontSize: 16, color: AppTheme.primaryText),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.primary,
+              foregroundColor: Colors.black,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            ),
+            child: const Text('OK', style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final FirestoreService firestoreService = FirestoreService();
@@ -35,29 +70,9 @@ class ListaAtividadePage extends StatelessWidget {
               child: StreamBuilder<List<Agendamento>>(
                 stream: firestoreService.streamAgendamentos(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primary),
-                      ),
-                    );
-                  }
-
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          'Erro ao carregar agendamentos: ${snapshot.error}',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(color: AppTheme.error),
-                        ),
-                      ),
-                    );
-                  }
-
                   final agendamentos = snapshot.data ?? [];
 
+                  // Se a lista estiver vazia, exibe imediatamente o estado vazio sem carregamento infinito
                   if (agendamentos.isEmpty) {
                     return Center(
                       child: Column(
@@ -188,13 +203,16 @@ class ListaAtividadePage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    final resultado = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const CadastroAtividadePage(),
                       ),
                     );
+                    if (resultado == true && context.mounted) {
+                      _showSuccessPopup(context);
+                    }
                   },
                   icon: const Icon(Icons.add, color: Colors.black, size: 24),
                   label: Text(

@@ -60,16 +60,8 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
       _experienciaController.clear();
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Tatuador cadastrado com sucesso no estúdio!',
-              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            ),
-            backgroundColor: AppTheme.primary,
-            duration: Duration(seconds: 3),
-          ),
-        );
+        // Retorna para a tela de lista passando true para disparar o pop-up
+        Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
