@@ -9,6 +9,33 @@ import 'cadastro_integrante_page.dart';
 class ListaIntegrantePage extends StatelessWidget {
   const ListaIntegrantePage({super.key});
 
+  void _showSuccessPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppTheme.secondaryBackground,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Row(
+          children: [
+            Icon(Icons.check_circle, color: AppTheme.primary, size: 28),
+            SizedBox(width: 10),
+            Text('Sucesso!', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          ],
+        ),
+        content: const Text(
+          'Cadastro realizado com sucesso!',
+          style: TextStyle(color: Colors.white70, fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('OK', style: TextStyle(color: AppTheme.primary, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final FirestoreService firestoreService = FirestoreService();
@@ -31,7 +58,7 @@ class ListaIntegrantePage extends StatelessWidget {
               child: StreamBuilder<List<Filme>>(
                 stream: firestoreService.streamFilmes(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primary),
@@ -194,13 +221,16 @@ class ListaIntegrantePage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const CadastroIntegrantePage(),
                       ),
                     );
+                    if (result == true && context.mounted) {
+                      _showSuccessPopup(context);
+                    }
                   },
                   icon: const Icon(Icons.add, color: Colors.white, size: 24),
                   label: Text(

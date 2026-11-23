@@ -9,6 +9,33 @@ import 'cadastro_atividade_page.dart';
 class ListaAtividadePage extends StatelessWidget {
   const ListaAtividadePage({super.key});
 
+  void _showSuccessPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppTheme.secondaryBackground,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Row(
+          children: [
+            Icon(Icons.check_circle, color: AppTheme.secondary, size: 28),
+            SizedBox(width: 10),
+            Text('Sucesso!', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          ],
+        ),
+        content: const Text(
+          'Cadastro realizado com sucesso!',
+          style: TextStyle(color: Colors.white70, fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('OK', style: TextStyle(color: AppTheme.secondary, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final FirestoreService firestoreService = FirestoreService();
@@ -31,7 +58,7 @@ class ListaAtividadePage extends StatelessWidget {
               child: StreamBuilder<List<Locacao>>(
                 stream: firestoreService.streamLocacoes(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primary),
@@ -184,13 +211,16 @@ class ListaAtividadePage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const CadastroAtividadePage(),
                       ),
                     );
+                    if (result == true && context.mounted) {
+                      _showSuccessPopup(context);
+                    }
                   },
                   icon: const Icon(Icons.add, color: Colors.white, size: 24),
                   label: Text(

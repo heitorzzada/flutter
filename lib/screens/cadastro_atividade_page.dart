@@ -55,16 +55,7 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
       _detalhesController.clear();
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Locação de filme registrada com sucesso! 🎟️',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            backgroundColor: AppTheme.primary,
-            duration: Duration(seconds: 3),
-          ),
-        );
+        Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {

@@ -60,16 +60,7 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
       _anoController.clear();
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Filme adicionado ao acervo com sucesso! 🎬',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            backgroundColor: AppTheme.primary,
-            duration: Duration(seconds: 3),
-          ),
-        );
+        Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
