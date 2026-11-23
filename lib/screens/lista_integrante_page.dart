@@ -16,15 +16,15 @@ class ListaIntegrantePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Artistas & Tatuadores',
+          'Tatuadores do Estúdio',
           style: GoogleFonts.cinzel(
-            fontSize: 22,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: AppTheme.primary,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
+          icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.primary, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
       ),
