@@ -1,24 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/integrante.dart';
-import '../models/atividade.dart';
+import '../models/tatuador.dart';
+import '../models/agendamento.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Coleções configuradas de acordo com as regras de segurança
-  CollectionReference get _integranteRef => _firestore.collection('integrante');
-  CollectionReference get _atividadeRef => _firestore.collection('atividade');
+  CollectionReference get _tatuadorRef => _firestore.collection('tatuador');
+  CollectionReference get _agendamentoRef => _firestore.collection('agendamento');
 
   // ==========================================
-  // ENTIDADE 1: INTEGRANTE
+  // ENTIDADE 1: TATUADOR (Artistas do Estúdio)
   // ==========================================
 
-  // List of Documents com atualização em tempo real
-  // Ordena por data de criação (do mais recente para o mais antigo)
-  Stream<List<Integrante>> streamIntegrantes() {
-    return _integranteRef.snapshots().map((snapshot) {
-      final list = snapshot.docs.map((doc) => Integrante.fromFirestore(doc)).toList();
-      // Ordenação local segura (caso ainda não tenha índice composto no Firestore)
+  Stream<List<Tatuador>> streamTatuadores() {
+    return _tatuadorRef.snapshots().map((snapshot) {
+      final list = snapshot.docs.map((doc) => Tatuador.fromFirestore(doc)).toList();
       list.sort((a, b) {
         if (a.criadoEm == null && b.criadoEm == null) return 0;
         if (a.criadoEm == null) return 1;
@@ -29,30 +25,26 @@ class FirestoreService {
     });
   }
 
-  // Create Document na coleção 'integrante'
-  Future<void> cadastrarIntegrante({
+  Future<void> cadastrarTatuador({
     required String nome,
-    required String funcao,
-    required String turma,
+    required String estilo,
+    required String experiencia,
   }) async {
-    await _integranteRef.add({
+    await _tatuadorRef.add({
       'nome': nome.trim(),
-      'funcao': funcao.trim(),
-      'turma': turma.trim(),
+      'estilo': estilo.trim(),
+      'experiencia': experiencia.trim(),
       'criado_em': FieldValue.serverTimestamp(),
     });
   }
 
   // ==========================================
-  // ENTIDADE 2: ATIVIDADE
+  // ENTIDADE 2: AGENDAMENTO / SESSÕES
   // ==========================================
 
-  // List of Documents com atualização em tempo real
-  // Ordena por data de criação (do mais recente para o mais antigo)
-  Stream<List<Atividade>> streamAtividades() {
-    return _atividadeRef.snapshots().map((snapshot) {
-      final list = snapshot.docs.map((doc) => Atividade.fromFirestore(doc)).toList();
-      // Ordenação local segura
+  Stream<List<Agendamento>> streamAgendamentos() {
+    return _agendamentoRef.snapshots().map((snapshot) {
+      final list = snapshot.docs.map((doc) => Agendamento.fromFirestore(doc)).toList();
       list.sort((a, b) {
         if (a.criadoEm == null && b.criadoEm == null) return 0;
         if (a.criadoEm == null) return 1;
@@ -63,12 +55,11 @@ class FirestoreService {
     });
   }
 
-  // Create Document na coleção 'atividade'
-  Future<void> cadastrarAtividade({
+  Future<void> cadastrarAgendamento({
     required String titulo,
     required String descricao,
   }) async {
-    await _atividadeRef.add({
+    await _agendamentoRef.add({
       'titulo': titulo.trim(),
       'descricao': descricao.trim(),
       'criado_em': FieldValue.serverTimestamp(),

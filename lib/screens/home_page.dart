@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
-import '../widgets/custom_image.dart';
 import 'equipe_page.dart';
 import 'objetivos_page.dart';
 import 'diagramas_page.dart';
@@ -16,23 +15,25 @@ class HomePage extends StatelessWidget {
     required String title,
     required IconData icon,
     required VoidCallback onTap,
-    Color backgroundColor = AppTheme.primary,
+    Color backgroundColor = AppTheme.secondaryBackground,
+    Color borderColor = const Color(0xFF333340),
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(11),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
-        width: 320,
+        width: 330,
         height: 70,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 18),
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(11),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: borderColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 6,
-              offset: const Offset(0, 3),
+              color: Colors.black.withValues(alpha: 0.25),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -41,22 +42,23 @@ class HomePage extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: AppTheme.alternate,
-              size: 36,
+              color: AppTheme.primary,
+              size: 32,
             ),
             Text(
               title,
               textAlign: TextAlign.end,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.oswald(
                 fontSize: 19,
-                fontWeight: FontWeight.w800,
-                color: AppTheme.alternate,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1,
+                color: AppTheme.primaryText,
               ),
             ),
             const Icon(
               Icons.arrow_forward_ios_sharp,
-              color: AppTheme.alternate,
-              size: 22,
+              color: AppTheme.primary,
+              size: 20,
             ),
           ],
         ),
@@ -67,13 +69,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.secondaryBackground,
+      backgroundColor: AppTheme.primaryBackground,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(112),
+        preferredSize: const Size.fromHeight(115),
         child: AppBar(
-          backgroundColor: AppTheme.primary,
+          backgroundColor: AppTheme.primaryDark,
           automaticallyImplyLeading: false,
-          elevation: 2,
+          elevation: 4,
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: const EdgeInsets.only(bottom: 14),
             centerTitle: true,
@@ -82,18 +84,18 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
-                  size: 44,
+                  Icons.colorize,
+                  color: AppTheme.primary,
+                  size: 42,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Vida Saudável',
-                  style: GoogleFonts.openSansCondensed(
-                    fontSize: 32,
+                  'André Tattoo Studio',
+                  style: GoogleFonts.cinzel(
+                    fontSize: 26,
                     fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: const Color(0xFFF4F7F9),
+                    letterSpacing: 1.5,
+                    color: AppTheme.primary,
                   ),
                 ),
               ],
@@ -108,49 +110,74 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Bem-vindo!',
+                  'BEM-VINDO AO ESTÚDIO',
                   style: GoogleFonts.oswald(
-                    fontSize: 26,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.primaryText,
+                    letterSpacing: 1.5,
+                    color: AppTheme.primary,
                   ),
                 ),
                 const SizedBox(height: 6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Cuide da sua saúde física e mental ',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        color: AppTheme.secondaryText,
-                      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'Arte na pele com técnica, precisão e estilo autêntico ✒️',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: AppTheme.secondaryText,
                     ),
-                    const Icon(
-                      Icons.favorite,
-                      color: AppTheme.primary,
-                      size: 20,
-                    ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
 
-                // Imagem de destaque com fallback seguro
-                const CustomImage(
-                  assetPath: 'assets/images/WhatsApp_Image_2026-05-04_at_5.45.32_PM.jpeg',
-                  width: 250,
-                  height: 180,
-                  fit: BoxFit.cover,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  placeholderIcon: Icons.spa_outlined,
+                // Card Iconográfico do Estúdio
+                Container(
+                  width: 330,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: AppTheme.secondaryBackground,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: AppTheme.primary.withValues(alpha: 0.4)),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF1E1E24), Color(0xFF141418)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.shield_outlined, color: AppTheme.primary, size: 50),
+                      const SizedBox(height: 8),
+                      Text(
+                        'TATTOO & PIERCING',
+                        style: GoogleFonts.cinzel(
+                          color: AppTheme.primary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '100% Materiais Descartáveis & Esterilizados',
+                        style: GoogleFonts.inter(
+                          color: AppTheme.secondaryText,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 24),
 
-                // 1. Tela Equipe
+                // 1. Tela Equipe (Tatuadores da Casa)
                 _buildMenuButton(
                   context: context,
-                  title: 'Equipe',
-                  icon: Icons.groups,
+                  title: 'Tatuadores da Casa',
+                  icon: Icons.groups_outlined,
                   onTap: () {
                     Navigator.push(
                       context,
@@ -160,11 +187,11 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 14),
 
-                // 2. Tela Objetivos
+                // 2. Tela Cuidados pós-Tattoo
                 _buildMenuButton(
                   context: context,
-                  title: 'Objetivos',
-                  icon: Icons.track_changes_rounded,
+                  title: 'Cuidados com a Tattoo',
+                  icon: Icons.verified_user_outlined,
                   onTap: () {
                     Navigator.push(
                       context,
@@ -177,8 +204,8 @@ class HomePage extends StatelessWidget {
                 // 3. Tela Diagramas
                 _buildMenuButton(
                   context: context,
-                  title: 'Diagramas',
-                  icon: Icons.bar_chart_sharp,
+                  title: 'Diagramas do Sistema',
+                  icon: Icons.schema_outlined,
                   onTap: () {
                     Navigator.push(
                       context,
@@ -186,11 +213,11 @@ class HomePage extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 22),
 
-                // Separador visual para as novas entidades do 3º trimestre
+                // Divisor Visual para as Coleções Firestore
                 Container(
-                  width: 320,
+                  width: 330,
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Row(
                     children: [
@@ -199,11 +226,11 @@ class HomePage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           'COLEÇÕES FIRESTORE',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.cinzel(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: AppTheme.primary,
-                            letterSpacing: 1.2,
+                            letterSpacing: 1.5,
                           ),
                         ),
                       ),
@@ -211,14 +238,15 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 14),
 
-                // 4. Lista da Entidade 1 (Integrantes)
+                // 4. Lista da Entidade 1 (Tatuadores)
                 _buildMenuButton(
                   context: context,
-                  title: 'Lista de integrantes',
-                  icon: Icons.badge_outlined,
-                  backgroundColor: AppTheme.secondary,
+                  title: 'Lista de Tatuadores',
+                  icon: Icons.brush_outlined,
+                  borderColor: AppTheme.primary.withValues(alpha: 0.5),
+                  backgroundColor: const Color(0xFF24221E),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -228,12 +256,13 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 14),
 
-                // 5. Lista da Entidade 2 (Atividades)
+                // 5. Lista da Entidade 2 (Agendamentos)
                 _buildMenuButton(
                   context: context,
-                  title: 'Lista de atividades',
-                  icon: Icons.checklist_rounded,
-                  backgroundColor: AppTheme.secondary,
+                  title: 'Lista de Agendamentos',
+                  icon: Icons.calendar_month_outlined,
+                  borderColor: AppTheme.primary.withValues(alpha: 0.5),
+                  backgroundColor: const Color(0xFF24221E),
                   onTap: () {
                     Navigator.push(
                       context,

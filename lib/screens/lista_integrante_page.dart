@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../models/integrante.dart';
+import '../models/tatuador.dart';
 import '../services/firestore_service.dart';
 import '../theme/app_theme.dart';
 import 'cadastro_integrante_page.dart';
@@ -16,15 +16,15 @@ class ListaIntegrantePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Integrantes',
-          style: GoogleFonts.interTight(
+          'Artistas & Tatuadores',
+          style: GoogleFonts.cinzel(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.primary,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -32,8 +32,8 @@ class ListaIntegrantePage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: StreamBuilder<List<Integrante>>(
-                stream: firestoreService.streamIntegrantes(),
+              child: StreamBuilder<List<Tatuador>>(
+                stream: firestoreService.streamTatuadores(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -48,7 +48,7 @@ class ListaIntegrantePage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Text(
-                          'Erro ao carregar integrantes: ${snapshot.error}',
+                          'Erro ao carregar artistas: ${snapshot.error}',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(color: AppTheme.error),
                         ),
@@ -56,21 +56,21 @@ class ListaIntegrantePage extends StatelessWidget {
                     );
                   }
 
-                  final integrantes = snapshot.data ?? [];
+                  final tatuadores = snapshot.data ?? [];
 
-                  if (integrantes.isEmpty) {
+                  if (tatuadores.isEmpty) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.group_off_outlined,
+                            Icons.brush_outlined,
                             size: 64,
-                            color: Colors.grey.shade400,
+                            color: Colors.grey.shade600,
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'Nenhum integrante cadastrado ainda.',
+                            'Nenhum tatuador cadastrado ainda.',
                             style: GoogleFonts.inter(
                               fontSize: 16,
                               color: AppTheme.secondaryText,
@@ -79,7 +79,7 @@ class ListaIntegrantePage extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Clique no botão abaixo para adicionar.',
+                            'Toque no botão dourado abaixo para cadastrar.',
                             style: GoogleFonts.inter(
                               fontSize: 14,
                               color: Colors.grey.shade500,
@@ -91,36 +91,36 @@ class ListaIntegrantePage extends StatelessWidget {
                   }
 
                   return ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    itemCount: integrantes.length,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    itemCount: tatuadores.length,
                     itemBuilder: (context, index) {
-                      final integrante = integrantes[index];
-                      final dataStr = integrante.criadoEm != null
-                          ? DateFormat('dd/MM/yyyy HH:mm').format(integrante.criadoEm!)
+                      final tatuador = tatuadores[index];
+                      final dataStr = tatuador.criadoEm != null
+                          ? DateFormat('dd/MM/yyyy HH:mm').format(tatuador.criadoEm!)
                           : null;
 
                       return Card(
                         margin: const EdgeInsets.only(bottom: 12),
-                        color: Colors.white,
-                        elevation: 1.5,
+                        color: AppTheme.secondaryBackground,
+                        elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
-                          side: BorderSide(color: Colors.grey.shade200),
+                          side: const BorderSide(color: Color(0xFF2E2E38)),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                          padding: const EdgeInsets.all(14),
                           child: Row(
                             children: [
                               CircleAvatar(
                                 radius: 24,
-                                backgroundColor: AppTheme.primary.withValues(alpha: 0.12),
+                                backgroundColor: AppTheme.primary.withValues(alpha: 0.2),
                                 child: Text(
-                                  integrante.nome.isNotEmpty
-                                      ? integrante.nome[0].toUpperCase()
-                                      : '?',
-                                  style: GoogleFonts.inter(
+                                  tatuador.nome.isNotEmpty
+                                      ? tatuador.nome[0].toUpperCase()
+                                      : 'T',
+                                  style: GoogleFonts.cinzel(
                                     color: AppTheme.primary,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -131,9 +131,9 @@ class ListaIntegrantePage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      integrante.nome,
-                                      style: GoogleFonts.interTight(
-                                        fontSize: 17,
+                                      tatuador.nome,
+                                      style: GoogleFonts.cinzel(
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                         color: AppTheme.primaryText,
                                       ),
@@ -141,11 +141,11 @@ class ListaIntegrantePage extends StatelessWidget {
                                     const SizedBox(height: 4),
                                     Row(
                                       children: [
-                                        const Icon(Icons.work_outline, size: 14, color: AppTheme.secondaryText),
-                                        const SizedBox(width: 4),
+                                        const Icon(Icons.style, size: 14, color: AppTheme.primary),
+                                        const SizedBox(width: 5),
                                         Expanded(
                                           child: Text(
-                                            integrante.funcao,
+                                            'Estilo: ${tatuador.estilo}',
                                             style: GoogleFonts.inter(
                                               fontSize: 14,
                                               color: AppTheme.secondaryText,
@@ -157,14 +157,14 @@ class ListaIntegrantePage extends StatelessWidget {
                                     const SizedBox(height: 2),
                                     Row(
                                       children: [
-                                        const Icon(Icons.school_outlined, size: 14, color: AppTheme.primary),
-                                        const SizedBox(width: 4),
+                                        const Icon(Icons.star_border, size: 14, color: AppTheme.accent),
+                                        const SizedBox(width: 5),
                                         Text(
-                                          integrante.turma,
+                                          tatuador.experiencia,
                                           style: GoogleFonts.inter(
                                             fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppTheme.primary,
+                                            color: AppTheme.accent,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                         if (dataStr != null) ...[
@@ -192,7 +192,7 @@ class ListaIntegrantePage extends StatelessWidget {
               ),
             ),
 
-            // Barra inferior com o botão de cadastro (+ Cadastrar Integrante)
+            // Botão Inferior de Cadastro
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
@@ -207,13 +207,14 @@ class ListaIntegrantePage extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.add, color: Colors.white, size: 24),
+                  icon: const Icon(Icons.add, color: Colors.black, size: 24),
                   label: Text(
-                    '+ Cadastrar integrante',
-                    style: GoogleFonts.interTight(
-                      fontSize: 16,
+                    '+ Cadastrar Tatuador',
+                    style: GoogleFonts.oswald(
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
+                      letterSpacing: 1,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(

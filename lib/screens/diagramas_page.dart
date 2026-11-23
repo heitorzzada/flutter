@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
-import '../widgets/custom_image.dart';
 
 class DiagramasPage extends StatelessWidget {
   const DiagramasPage({super.key});
@@ -9,22 +8,20 @@ class DiagramasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.secondaryBackground,
+      backgroundColor: AppTheme.primaryBackground,
       appBar: AppBar(
-        backgroundColor: AppTheme.primary,
         title: Text(
-          'Diagramas',
-          style: GoogleFonts.openSansCondensed(
+          'Diagramas do Sistema',
+          style: GoogleFonts.cinzel(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.primary,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
           onPressed: () => Navigator.pop(context),
         ),
-        elevation: 2,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -33,93 +30,101 @@ class DiagramasPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Icon(
-                Icons.bar_chart,
-                color: Color(0xFF6F5ADB),
-                size: 36,
+                Icons.schema_outlined,
+                color: AppTheme.primary,
+                size: 40,
               ),
               const SizedBox(height: 6),
               Text(
-                'Diagramas:',
-                style: GoogleFonts.oswald(
-                  fontSize: 24,
+                'Estrutura do Aplicativo',
+                style: GoogleFonts.cinzel(
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.primaryText,
+                  color: AppTheme.primary,
+                ),
+              ),
+              const SizedBox(height: 18),
+
+              // Diagrama 1: Casos de Uso
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppTheme.secondaryBackground,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFF2E2E38)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '1. Diagrama de Casos de Uso',
+                      style: GoogleFonts.cinzel(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Descreve as interações do usuário no estúdio:\n'
+                      '• Consultar a equipe de tatuadores autorais.\n'
+                      '• Visualizar orientações de cuidados pós-sessão.\n'
+                      '• Cadastrar e consultar tatuadores na coleção Firestore.\n'
+                      '• Agendar novas sessões de tatuagem em tempo real.',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: AppTheme.secondaryText,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 16),
 
-              // Diagrama 1: Caso de Uso
-              Text(
-                'Diagrama de Casos de Uso',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.primary,
+              // Diagrama 2: Classes / Entidades
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppTheme.secondaryBackground,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFF2E2E38)),
                 ),
-              ),
-              const SizedBox(height: 8),
-              const CustomImage(
-                assetPath: 'assets/images/ChatGPT_Image_4_de_mai._de_2026,_22_40_08.png',
-                width: 340,
-                height: 200,
-                fit: BoxFit.cover,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                placeholderIcon: Icons.account_tree_outlined,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Representa como o usuário interage com o aplicativo, podendo acessar as telas: inicial, equipe, objetivos e diagramas.',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.oswald(
-                  fontSize: 15,
-                  color: AppTheme.primaryText,
-                  height: 1.3,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Divider(thickness: 1.5, color: Color(0xFFEEEEEE)),
-              ),
-
-              // Diagrama 2: Diagrama de Classes
-              Text(
-                'Diagrama de Classes (Entidades)',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.primary,
-                ),
-              ),
-              const SizedBox(height: 8),
-              const CustomImage(
-                assetPath: 'assets/images/ChatGPT_Image_4_de_mai._de_2026,_22_42_51.png',
-                width: 340,
-                height: 200,
-                fit: BoxFit.cover,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                placeholderIcon: Icons.schema_outlined,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Mostra a estrutura do sistema, com as classes das telas e as entidades (Integrante e Atividade) que são persistidas no Cloud Firestore.',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.oswald(
-                  fontSize: 15,
-                  color: AppTheme.primaryText,
-                  height: 1.3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '2. Diagrama de Classes (Entidades)',
+                      style: GoogleFonts.cinzel(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Modelagem das duas coleções persistidas no Cloud Firestore:\n\n'
+                      '• Classe Tatuador (Entidade 1):\n'
+                      '   - nome: String\n'
+                      '   - estilo: String\n'
+                      '   - experiencia: String\n'
+                      '   - criado_em: Timestamp\n\n'
+                      '• Classe Agendamento (Entidade 2):\n'
+                      '   - titulo: String\n'
+                      '   - descricao: String\n'
+                      '   - criado_em: Timestamp',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: AppTheme.secondaryText,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Barra inferior decorativa
-              Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: AppTheme.primary,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
             ],
           ),
         ),

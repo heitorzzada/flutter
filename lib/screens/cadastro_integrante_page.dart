@@ -13,8 +13,8 @@ class CadastroIntegrantePage extends StatefulWidget {
 class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
   final _formKey = GlobalKey<FormState>();
   final _nomeController = TextEditingController();
-  final _funcaoController = TextEditingController();
-  final _turmaController = TextEditingController();
+  final _estiloController = TextEditingController();
+  final _experienciaController = TextEditingController();
 
   final FirestoreService _firestoreService = FirestoreService();
   bool _salvando = false;
@@ -22,22 +22,21 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
   @override
   void dispose() {
     _nomeController.dispose();
-    _funcaoController.dispose();
-    _turmaController.dispose();
+    _estiloController.dispose();
+    _experienciaController.dispose();
     super.dispose();
   }
 
-  Future<void> _salvarIntegrante() async {
+  Future<void> _salvarTatuador() async {
     final nome = _nomeController.text.trim();
-    final funcao = _funcaoController.text.trim();
-    final turma = _turmaController.text.trim();
+    final estilo = _estiloController.text.trim();
+    final experiencia = _experienciaController.text.trim();
 
-    // Validação de campos vazios com alerta
-    if (nome.isEmpty || funcao.isEmpty || turma.isEmpty) {
+    if (nome.isEmpty || estilo.isEmpty || experiencia.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Por favor, preencha todos os campos antes de salvar!',
+            'Por favor, preencha todos os campos do tatuador!',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: AppTheme.error,
@@ -50,26 +49,24 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
     setState(() => _salvando = true);
 
     try {
-      await _firestoreService.cadastrarIntegrante(
+      await _firestoreService.cadastrarTatuador(
         nome: nome,
-        funcao: funcao,
-        turma: turma,
+        estilo: estilo,
+        experiencia: experiencia,
       );
 
-      // Limpar campos
       _nomeController.clear();
-      _funcaoController.clear();
-      _turmaController.clear();
+      _estiloController.clear();
+      _experienciaController.clear();
 
       if (mounted) {
-        // Mensagem de sucesso (Show Snack Bar)
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'Integrante cadastrado com sucesso!',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              'Tatuador cadastrado com sucesso no estúdio!',
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
-            backgroundColor: AppTheme.success,
+            backgroundColor: AppTheme.primary,
             duration: Duration(seconds: 3),
           ),
         );
@@ -78,7 +75,7 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erro ao salvar integrante: $e'),
+            content: Text('Erro ao salvar: $e'),
             backgroundColor: AppTheme.error,
           ),
         );
@@ -97,15 +94,15 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Cadastro de integrantes',
-            style: GoogleFonts.interTight(
+            'Cadastro de Tatuador',
+            style: GoogleFonts.cinzel(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.primary,
             ),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -118,56 +115,59 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Preencha os dados do integrante',
+                    'Cadastre um novo artista no estúdio',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.merriweather(
+                    style: GoogleFonts.cinzel(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: AppTheme.primaryText,
+                      color: AppTheme.primary,
                     ),
                   ),
                   const SizedBox(height: 24),
 
-                  // Campo Nome
+                  // Nome do Tatuador
                   TextFormField(
                     controller: _nomeController,
+                    style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Nome',
-                      hintText: 'Ex.: Ana Clara',
-                      prefixIcon: Icon(Icons.person, color: AppTheme.primary),
+                      labelText: 'Nome do Artista',
+                      hintText: 'Ex.: André Silva',
+                      prefixIcon: Icon(Icons.brush, color: AppTheme.primary),
                     ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Campo Função
+                  // Estilo Artístico
                   TextFormField(
-                    controller: _funcaoController,
+                    controller: _estiloController,
+                    style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Função',
-                      hintText: 'Ex.: Designer / Desenvolvedor',
-                      prefixIcon: Icon(Icons.work_outline, color: AppTheme.primary),
+                      labelText: 'Estilo Principal',
+                      hintText: 'Ex.: Blackwork / Fineline / Old School',
+                      prefixIcon: Icon(Icons.auto_awesome, color: AppTheme.primary),
                     ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Campo Turma
+                  // Experiência ou Redes
                   TextFormField(
-                    controller: _turmaController,
+                    controller: _experienciaController,
+                    style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Turma',
-                      hintText: 'Ex.: 3º Ano Informática',
-                      prefixIcon: Icon(Icons.school_outlined, color: AppTheme.primary),
+                      labelText: 'Experiência / Contato',
+                      hintText: 'Ex.: 5 anos de experiência | @andre.ink',
+                      prefixIcon: Icon(Icons.badge_outlined, color: AppTheme.primary),
                     ),
                   ),
                   const SizedBox(height: 32),
 
                   // Botão Salvar
                   ElevatedButton(
-                    onPressed: _salvando ? null : _salvarIntegrante,
+                    onPressed: _salvando ? null : _salvarTatuador,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: AppTheme.primary,
-                      elevation: 2,
+                      elevation: 3,
                     ),
                     child: _salvando
                         ? const SizedBox(
@@ -175,29 +175,31 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
                             width: 22,
                             child: CircularProgressIndicator(
                               strokeWidth: 2.5,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                             ),
                           )
                         : Text(
-                            'Salvar',
-                            style: GoogleFonts.interTight(
+                            'Salvar Tatuador',
+                            style: GoogleFonts.oswald(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: Colors.black,
+                              letterSpacing: 1,
                             ),
                           ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Botão Voltar para Lista
+                  // Voltar para lista
                   OutlinedButton.icon(
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.list, color: AppTheme.primary),
                     label: Text(
-                      'Ver Lista de Integrantes',
-                      style: GoogleFonts.interTight(
+                      'Ver Lista de Tatuadores',
+                      style: GoogleFonts.oswald(
                         color: AppTheme.primary,
                         fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
                       ),
                     ),
                     style: OutlinedButton.styleFrom(

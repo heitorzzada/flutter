@@ -7,7 +7,6 @@ import 'theme/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Inicialização segura do Firebase
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -16,16 +15,16 @@ void main() async {
     debugPrint('Nota: Firebase.initializeApp: $e');
   }
 
-  runApp(const VidaSaudavelApp());
+  runApp(const AndreTattooStudioApp());
 }
 
-class VidaSaudavelApp extends StatelessWidget {
-  const VidaSaudavelApp({super.key});
+class AndreTattooStudioApp extends StatelessWidget {
+  const AndreTattooStudioApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Vida Saudável',
+      title: 'André Tattoo Studio',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.themeData,
       home: const HomePage(),

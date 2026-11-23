@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Cores principais do aplicativo extraídas do FlutterFlow
-  static const Color primary = Color(0xFF6D4BBC);
-  static const Color secondary = Color(0xFF551EBB);
-  static const Color accent = Color(0xFF9974CC);
-  static const Color primaryBackground = Color(0xFFF4F7F9);
-  static const Color secondaryBackground = Colors.white;
-  static const Color primaryText = Color(0xFF14181B);
-  static const Color secondaryText = Color(0xFF57636C);
+  // Paleta de Cores Premium para Estúdio de Tatuagem (Dark / Ouro / Carmesim)
+  static const Color primary = Color(0xFFD4AF37); // Ouro envelhecido metálico
+  static const Color primaryDark = Color(0xFF141416); // Preto carbono
+  static const Color secondary = Color(0xFFA31D1D); // Carmesim tinta
+  static const Color accent = Color(0xFFE5C158); // Ouro claro
+  static const Color primaryBackground = Color(0xFF121214); // Fundo escuro fosco
+  static const Color secondaryBackground = Color(0xFF1E1E24); // Fundo dos cards escuro
+  static const Color surfaceColor = Color(0xFF282830); // Superfície elevada
+  static const Color primaryText = Color(0xFFF5F5F7); // Branco leve
+  static const Color secondaryText = Color(0xFFA8A8B4); // Cinza médio
   static const Color alternate = Colors.white;
   static const Color error = Color(0xFFFF5963);
-  static const Color success = Color(0xFF249689);
+  static const Color success = Color(0xFF2ECC71);
 
   static ThemeData get themeData {
     return ThemeData(
       useMaterial3: true,
+      brightness: Brightness.dark,
       colorScheme: ColorScheme.fromSeed(
         seedColor: primary,
+        brightness: Brightness.dark,
         primary: primary,
         secondary: secondary,
         surface: primaryBackground,
@@ -26,33 +30,36 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: primaryBackground,
       appBarTheme: AppBarTheme(
-        backgroundColor: primary,
-        foregroundColor: Colors.white,
-        elevation: 2,
+        backgroundColor: primaryDark,
+        foregroundColor: primary,
+        elevation: 3,
         centerTitle: false,
-        titleTextStyle: GoogleFonts.interTight(
-          color: Colors.white,
+        titleTextStyle: GoogleFonts.cinzel(
+          color: primary,
           fontSize: 22,
           fontWeight: FontWeight.bold,
+          letterSpacing: 1.2,
         ),
       ),
       cardTheme: CardThemeData(
         color: secondaryBackground,
-        elevation: 2,
+        elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(color: Color(0xFF2E2E38)),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primary,
-          foregroundColor: Colors.white,
+          foregroundColor: Colors.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          textStyle: GoogleFonts.interTight(
+          textStyle: GoogleFonts.oswald(
             fontSize: 16,
             fontWeight: FontWeight.bold,
+            letterSpacing: 1,
           ),
         ),
       ),
@@ -64,16 +71,16 @@ class AppTheme {
           fontSize: 14,
         ),
         hintStyle: GoogleFonts.inter(
-          color: secondaryText.withValues(alpha: 0.7),
+          color: secondaryText.withValues(alpha: 0.6),
           fontSize: 14,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: const BorderSide(color: Color(0xFF333340)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: const BorderSide(color: Color(0xFF333340)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

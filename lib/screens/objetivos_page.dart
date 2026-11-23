@@ -5,73 +5,61 @@ import '../theme/app_theme.dart';
 class ObjetivosPage extends StatelessWidget {
   const ObjetivosPage({super.key});
 
-  Widget _buildHabitCard({
+  Widget _buildCareCard({
     required IconData icon,
     required String title,
     required String subtitle,
-    double titleFontSize = 22,
   }) {
     return Container(
-      width: 354,
-      height: 82,
+      width: 350,
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: AppTheme.primary,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          bottomLeft: Radius.circular(11),
-          topRight: Radius.circular(11),
-          bottomRight: Radius.circular(11),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: AppTheme.secondaryBackground,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFF2E2E38)),
       ),
       child: Row(
         children: [
-          const SizedBox(width: 14),
           Container(
-            width: 52,
-            height: 52,
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
-              color: AppTheme.accent,
+              color: AppTheme.primary.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
             ),
             child: Icon(
               icon,
-              color: Colors.white,
-              size: 34,
+              color: AppTheme.primary,
+              size: 28,
             ),
           ),
           const SizedBox(width: 14),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: GoogleFonts.inter(
-                    fontSize: titleFontSize,
+                  style: GoogleFonts.cinzel(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppTheme.primaryText,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 3),
                 Text(
                   subtitle,
-                  style: GoogleFonts.mukta(
-                    fontSize: 14,
-                    color: Colors.white.withValues(alpha: 0.9),
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    color: AppTheme.secondaryText,
+                    height: 1.3,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
         ],
       ),
     );
@@ -80,102 +68,72 @@ class ObjetivosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.secondaryBackground,
+      backgroundColor: AppTheme.primaryBackground,
       appBar: AppBar(
-        backgroundColor: AppTheme.primary,
         title: Text(
-          'Objetivos',
-          style: GoogleFonts.interTight(
+          'Cuidados com a Tattoo',
+          style: GoogleFonts.cinzel(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.primary,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
           onPressed: () => Navigator.pop(context),
         ),
-        elevation: 2,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
           child: Column(
             children: [
               Text(
-                'Pequenas mudanças hoje,\ngrandes conquistas amanhã! 💜',
+                'Guia de Cicatrização Perfeita ⚡',
                 textAlign: TextAlign.center,
-                style: GoogleFonts.openSansCondensed(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.primaryText,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Objetivos gerais',
-                style: GoogleFonts.oswald(
-                  fontSize: 22,
+                style: GoogleFonts.cinzel(
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.primaryText,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // 1. Água
-              _buildHabitCard(
-                icon: Icons.water_drop,
-                title: 'Beber mais água',
-                subtitle: 'Mantenha-se hidratado todos os dias.',
-                titleFontSize: 20,
-              ),
-              const SizedBox(height: 14),
-
-              // 2. Exercícios
-              _buildHabitCard(
-                icon: Icons.directions_run_sharp,
-                title: 'Praticar exercícios',
-                subtitle: 'Mexa o corpo e cuide da saúde.',
-                titleFontSize: 20,
-              ),
-              const SizedBox(height: 14),
-
-              // 3. Alimentação
-              _buildHabitCard(
-                icon: Icons.restaurant_sharp,
-                title: 'Alimentação saudável',
-                subtitle: 'Escolhas equilibradas para mais energia.',
-                titleFontSize: 19,
-              ),
-              const SizedBox(height: 14),
-
-              // 4. Sono
-              _buildHabitCard(
-                icon: Icons.dark_mode_rounded,
-                title: 'Dormir bem',
-                subtitle: 'Uma boa noite de sono faz diferença.',
-                titleFontSize: 20,
-              ),
-              const SizedBox(height: 14),
-
-              // 5. Reduzir telas
-              _buildHabitCard(
-                icon: Icons.no_cell_rounded,
-                title: 'Reduzir uso de telas',
-                subtitle: 'Evite excesso de tempo no celular no dia a dia.',
-                titleFontSize: 19,
-              ),
-              const SizedBox(height: 24),
-
-              // Barra inferior decorativa
-              Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
                   color: AppTheme.primary,
-                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              const SizedBox(height: 6),
+              Text(
+                'Siga as orientações para manter suas cores vivas e o traço impecável.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  color: AppTheme.secondaryText,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              _buildCareCard(
+                icon: Icons.cleaning_services_outlined,
+                title: '1. Higiene com Sabonete Neutro',
+                subtitle: 'Lave suavemente 3 vezes ao dia com água fria e sabonete antibacteriano.',
+              ),
+              _buildCareCard(
+                icon: Icons.water_drop_outlined,
+                title: '2. Hidratação Constante',
+                subtitle: 'Aplique camada fina de pomada cicatrizante recomendada pelo tatuador.',
+              ),
+              _buildCareCard(
+                icon: Icons.wb_sunny_outlined,
+                title: '3. Evitar Sol Direto & Praia',
+                subtitle: 'Não tome sol, evite piscina e água do mar nos primeiros 20 dias.',
+              ),
+              _buildCareCard(
+                icon: Icons.do_not_touch_outlined,
+                title: '4. Não Coçar nem Arrancar Casquinhas',
+                subtitle: 'A casquinha protege o pigmento; arrancá-la pode falhar o traço da tattoo.',
+              ),
+              _buildCareCard(
+                icon: Icons.restaurant_outlined,
+                title: '5. Alimentação Balanceada',
+                subtitle: 'Evite alimentos muito gordurosos como carne de porco e frutos do mar na primeira semana.',
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

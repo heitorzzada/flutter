@@ -1,87 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
-import '../widgets/custom_image.dart';
 
 class EquipePage extends StatelessWidget {
   const EquipePage({super.key});
 
-  Widget _buildMemberCard({
-    required BuildContext context,
+  Widget _buildArtistCard({
     required String name,
-    required String tasks,
-    required String imagePath,
+    required String role,
+    required String description,
+    required IconData icon,
   }) {
-    return Material(
-      color: Colors.transparent,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+    return Container(
+      width: 350,
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppTheme.secondaryBackground,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
       ),
-      child: Container(
-        width: 355,
-        constraints: const BoxConstraints(minHeight: 180),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppTheme.secondaryBackground,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.grey.shade200),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            radius: 28,
+            backgroundColor: AppTheme.primary.withValues(alpha: 0.2),
+            child: Icon(icon, color: AppTheme.primary, size: 28),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
-                  Icons.lightbulb_outline,
-                  color: Color(0xFF303090),
-                  size: 24,
+                Text(
+                  name,
+                  style: GoogleFonts.cinzel(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.primaryText,
+                  ),
                 ),
-                const SizedBox(height: 8),
-                CustomImage(
-                  assetPath: imagePath,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                  borderRadius: BorderRadius.circular(8),
-                  placeholderIcon: Icons.person_outline,
+                Text(
+                  role,
+                  style: GoogleFonts.oswald(
+                    fontSize: 14,
+                    color: AppTheme.primary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(
+                  width: 220,
+                  child: Divider(
+                    thickness: 1,
+                    color: Color(0xFF333340),
+                    height: 16,
+                  ),
+                ),
+                Text(
+                  description,
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    color: AppTheme.secondaryText,
+                    height: 1.4,
+                  ),
                 ),
               ],
             ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: GoogleFonts.oswald(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryText,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 200,
-                    child: Divider(
-                      thickness: 2,
-                      color: Color(0xFF303090),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    tasks,
-                    style: GoogleFonts.oswald(
-                      fontSize: 14,
-                      color: AppTheme.primaryText,
-                      height: 1.3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -89,22 +76,20 @@ class EquipePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.secondaryBackground,
+      backgroundColor: AppTheme.primaryBackground,
       appBar: AppBar(
-        backgroundColor: AppTheme.primary,
         title: Text(
-          'Equipe',
-          style: GoogleFonts.openSansCondensed(
+          'Artistas da Casa',
+          style: GoogleFonts.cinzel(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.primary,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppTheme.primary),
           onPressed: () => Navigator.pop(context),
         ),
-        elevation: 2,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -113,58 +98,53 @@ class EquipePage extends StatelessWidget {
             children: [
               const Icon(
                 Icons.groups,
-                color: Color(0xFF551EBB),
+                color: AppTheme.primary,
                 size: 45,
               ),
               const SizedBox(height: 8),
               Text(
-                'Nossa equipe',
-                style: GoogleFonts.oswald(
+                'Nossa Equipe de Artistas',
+                style: GoogleFonts.cinzel(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.primaryText,
+                  color: AppTheme.primary,
                 ),
               ),
               const SizedBox(height: 6),
               Text(
-                'Conheça os integrantes do projeto e suas contribuições. 💜',
+                'Conheça os profissionais e seus estilos de tatuagem autorais 🖤',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 13,
-                  letterSpacing: 1.5,
                   color: AppTheme.secondaryText,
-                  height: 1.4,
                 ),
               ),
               const SizedBox(height: 24),
 
-              // Integrante 1: Kauany Vieira
-              _buildMemberCard(
-                context: context,
+              // Artista 1: André Silva
+              _buildArtistCard(
+                name: 'André Silva',
+                role: 'Tatuador Residente & Fundador',
+                description: '• Especialista em Blackwork e Geométrico\n• 7 anos de experiência na arte da tatuagem\n• Criação de artes exclusivas sob medida',
+                icon: Icons.brush,
+              ),
+
+              // Artista 2: Gabrielli Dolme
+              _buildArtistCard(
+                name: 'Gabrielli Dolme',
+                role: 'Tatuadora Convidada',
+                description: '• Especialista em Fineline e Microrealismo\n• Traços finos e florais delicados\n• Consultoria em cicatrização e cuidados',
+                icon: Icons.auto_awesome,
+              ),
+
+              // Artista 3: Kauany Vieira
+              _buildArtistCard(
                 name: 'Kauany Vieira',
-                tasks: '• Desenvolvimento da tela inicial\n• Organização do layout no FlutterFlow\n• Definição do design do aplicativo',
-                imagePath: 'assets/images/Gemini_Generated_Image_ani28sani28sani2.png',
+                role: 'Body Piercer & Estilo Tradicional',
+                description: '• Aplicação de piercings com materiais de titânio\n• Tatuagens Old School e Tradicional Americano\n• Gerenciamento do estúdio e atendimento',
+                icon: Icons.colorize,
               ),
               const SizedBox(height: 20),
-
-              // Integrante 2: Gabrielli Dolme
-              _buildMemberCard(
-                context: context,
-                name: 'Gabrielli Dolme',
-                tasks: '• Criação da tela de objetivos\n• Organização dos componentes\n• Estruturação das demais telas do aplicativo',
-                imagePath: 'assets/images/ChatGPT_Image_4_de_mai._de_2026,_18_39_00.png',
-              ),
-              const SizedBox(height: 32),
-
-              // Barra inferior decorativa
-              Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: AppTheme.primary,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
             ],
           ),
         ),
