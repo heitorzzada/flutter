@@ -62,17 +62,8 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
       _turmaController.clear();
 
       if (mounted) {
-        // Mensagem de sucesso (Show Snack Bar)
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Integrante cadastrado com sucesso!',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            backgroundColor: AppTheme.success,
-            duration: Duration(seconds: 3),
-          ),
-        );
+        // Retorna para a tela de lista passando true para disparar o pop-up
+        Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {

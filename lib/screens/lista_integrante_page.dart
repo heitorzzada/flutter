@@ -9,6 +9,38 @@ import 'cadastro_integrante_page.dart';
 class ListaIntegrantePage extends StatelessWidget {
   const ListaIntegrantePage({super.key});
 
+  void _showSuccessPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: const [
+            Icon(Icons.check_circle, color: AppTheme.success, size: 28),
+            SizedBox(width: 10),
+            Text('Sucesso!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: AppTheme.primaryText)),
+          ],
+        ),
+        content: const Text(
+          'Cadastro realizado com sucesso!',
+          style: TextStyle(fontSize: 16, color: AppTheme.primaryText),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.primary,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            ),
+            child: const Text('OK', style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final FirestoreService firestoreService = FirestoreService();
@@ -35,29 +67,10 @@ class ListaIntegrantePage extends StatelessWidget {
               child: StreamBuilder<List<Integrante>>(
                 stream: firestoreService.streamIntegrantes(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primary),
-                      ),
-                    );
-                  }
-
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          'Erro ao carregar integrantes: ${snapshot.error}',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(color: AppTheme.error),
-                        ),
-                      ),
-                    );
-                  }
-
+                  // Se houver dados, ou se a conexão estiver pronta ou com erro
                   final integrantes = snapshot.data ?? [];
 
+                  // Se a lista estiver vazia, exibe imediatamente o estado vazio sem carregamento infinito
                   if (integrantes.isEmpty) {
                     return Center(
                       child: Column(
@@ -199,13 +212,16 @@ class ListaIntegrantePage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    final resultado = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const CadastroIntegrantePage(),
                       ),
                     );
+                    if (resultado == true && context.mounted) {
+                      _showSuccessPopup(context);
+                    }
                   },
                   icon: const Icon(Icons.add, color: Colors.white, size: 24),
                   label: Text(

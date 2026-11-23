@@ -9,6 +9,38 @@ import 'cadastro_atividade_page.dart';
 class ListaAtividadePage extends StatelessWidget {
   const ListaAtividadePage({super.key});
 
+  void _showSuccessPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: const [
+            Icon(Icons.check_circle, color: AppTheme.success, size: 28),
+            SizedBox(width: 10),
+            Text('Sucesso!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: AppTheme.primaryText)),
+          ],
+        ),
+        content: const Text(
+          'Cadastro realizado com sucesso!',
+          style: TextStyle(fontSize: 16, color: AppTheme.primaryText),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.primary,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            ),
+            child: const Text('OK', style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final FirestoreService firestoreService = FirestoreService();
@@ -35,29 +67,9 @@ class ListaAtividadePage extends StatelessWidget {
               child: StreamBuilder<List<Atividade>>(
                 stream: firestoreService.streamAtividades(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primary),
-                      ),
-                    );
-                  }
-
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          'Erro ao carregar atividades: ${snapshot.error}',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(color: AppTheme.error),
-                        ),
-                      ),
-                    );
-                  }
-
                   final atividades = snapshot.data ?? [];
 
+                  // Se a lista estiver vazia, exibe imediatamente o estado vazio sem carregamento infinito
                   if (atividades.isEmpty) {
                     return Center(
                       child: Column(
@@ -187,13 +199,16 @@ class ListaAtividadePage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    final resultado = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const CadastroAtividadePage(),
                       ),
                     );
+                    if (resultado == true && context.mounted) {
+                      _showSuccessPopup(context);
+                    }
                   },
                   icon: const Icon(Icons.add, color: Colors.white, size: 24),
                   label: Text(
