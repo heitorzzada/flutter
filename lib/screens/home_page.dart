@@ -16,9 +16,9 @@ class HomePage extends StatelessWidget {
       backgroundColor: AppTheme.primaryBackground,
       body: CustomScrollView(
         slivers: [
-          // AppBar Customizada com Estilo de Ateliê de Tatuagem
+          // Banner Cinema no Topo
           SliverAppBar(
-            expandedHeight: 180,
+            expandedHeight: 185,
             floating: false,
             pinned: true,
             backgroundColor: AppTheme.primaryDark,
@@ -30,21 +30,20 @@ class HomePage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'ANDRÉ DE OLIVEIRA',
-                    style: GoogleFonts.cinzel(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 2,
+                    'CINEMELHADO',
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 28,
+                      letterSpacing: 3,
                       color: AppTheme.primary,
                     ),
                   ),
                   Text(
-                    'TATTOO ATELIER & STUDIO',
-                    style: GoogleFonts.oswald(
+                    'VÍDEO LOCADORA & CINE CLUBE',
+                    style: GoogleFonts.montserrat(
                       fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: 2.5,
-                      color: AppTheme.secondaryText,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 2,
+                      color: AppTheme.secondary,
                     ),
                   ),
                 ],
@@ -55,7 +54,7 @@ class HomePage extends StatelessWidget {
                   Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF0A0A0C), Color(0xFF1E1E26)],
+                        colors: [Color(0xFF0F0F14), Color(0xFF1E1418)],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -63,18 +62,18 @@ class HomePage extends StatelessWidget {
                   ),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 40),
+                      padding: const EdgeInsets.only(bottom: 45),
                       child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
-                          color: AppTheme.primary.withValues(alpha: 0.08),
+                          color: AppTheme.primary.withValues(alpha: 0.15),
+                          border: Border.all(color: AppTheme.primary.withValues(alpha: 0.4)),
                         ),
                         child: const Icon(
-                          Icons.colorize,
+                          Icons.local_movies_rounded,
                           color: AppTheme.primary,
-                          size: 34,
+                          size: 38,
                         ),
                       ),
                     ),
@@ -84,43 +83,40 @@ class HomePage extends StatelessWidget {
             ),
           ),
 
-          // Conteúdo da Página
+          // Corpo da Tela
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Faixa de Informações Rápidas
+                  // Badges de Destaque da Locadora
                   Row(
                     children: [
-                      _buildQuickStat(icon: Icons.star, value: '5.0', label: 'Avaliação'),
-                      const SizedBox(width: 12),
-                      _buildQuickStat(icon: Icons.shield, value: '100%', label: 'Biosseguro'),
-                      const SizedBox(width: 12),
-                      _buildQuickStat(icon: Icons.brush, value: 'Autoral', label: 'Blackwork'),
+                      _buildCinemaStat(icon: Icons.movie, value: 'VHS & 4K', label: 'Mídias'),
+                      const SizedBox(width: 10),
+                      _buildCinemaStat(icon: Icons.star, value: '4.9 ★', label: 'Avaliação'),
+                      const SizedBox(width: 10),
+                      _buildCinemaStat(icon: Icons.fastfood, value: 'Pipoca', label: 'Grátis Sex/Sáb'),
                     ],
                   ),
                   const SizedBox(height: 26),
 
-                  // Seção 1: Painel Institucional
+                  // Menu da Locadora
                   Text(
-                    'CONHEÇA O ATELIER',
-                    style: GoogleFonts.oswald(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primary,
+                    'SERVIÇOS & INFORMAÇÕES',
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 18,
                       letterSpacing: 1.5,
+                      color: AppTheme.secondary,
                     ),
                   ),
                   const SizedBox(height: 12),
 
-                  // Cards do Menu Institucional
                   _buildNavTile(
-                    context: context,
-                    icon: Icons.person_outline,
-                    title: 'Sobre o Artista',
-                    subtitle: 'Conheça André de Oliveira e seus estilos de traço',
+                    icon: Icons.groups_outlined,
+                    title: 'Curadoria & Equipe',
+                    subtitle: 'Conheça Lucas Melhado e a equipe de cinéfilos da locadora',
                     onTap: () {
                       Navigator.push(
                         context,
@@ -131,10 +127,9 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   _buildNavTile(
-                    context: context,
-                    icon: Icons.health_and_safety_outlined,
-                    title: 'Manual de Cicatrização',
-                    subtitle: 'Orientações pós-sessão para sua tattoo cicatrizar perfeita',
+                    icon: Icons.rule_folder_outlined,
+                    title: 'Regulamento de Locação',
+                    subtitle: 'Prazos de devolução, diárias e promoções do Cine Clube',
                     onTap: () {
                       Navigator.push(
                         context,
@@ -145,10 +140,9 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   _buildNavTile(
-                    context: context,
                     icon: Icons.account_tree_outlined,
-                    title: 'Arquitetura & Diagramas',
-                    subtitle: 'Estrutura técnica do sistema e modelagem das entidades',
+                    title: 'Arquitetura do Sistema',
+                    subtitle: 'Diagramas de casos de uso e modelagem do acervo',
                     onTap: () {
                       Navigator.push(
                         context,
@@ -158,16 +152,15 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 28),
 
-                  // Seção 2: Banco de Dados Cloud Firestore (3º Trimestre)
+                  // Seção Firestore (3º Trimestre)
                   Row(
                     children: [
                       Text(
                         'BASE DE DADOS FIRESTORE',
-                        style: GoogleFonts.oswald(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.primary,
+                        style: GoogleFonts.bebasNeue(
+                          fontSize: 18,
                           letterSpacing: 1.5,
+                          color: AppTheme.primary,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -178,7 +171,7 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          'TEMPO REAL',
+                          'ONLINE',
                           style: GoogleFonts.inter(
                             fontSize: 10,
                             color: AppTheme.primary,
@@ -190,14 +183,13 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // Card Entidade 1: Tatuadores
+                  // Card Entidade 1: Acervo de Filmes
                   _buildFirestoreFeatureCard(
-                    context: context,
-                    title: 'Tatuadores do Estúdio',
-                    tag: 'ENTIDADE 1',
-                    desc: 'Acesse o catálogo de tatuadores registrados no Firestore e adicione novos membros à equipe.',
-                    icon: Icons.brush,
-                    buttonLabel: 'Ver Lista de Tatuadores',
+                    title: 'Acervo de Filmes',
+                    tag: 'ENTIDADE 1 (COLEÇÃO: FILME)',
+                    desc: 'Consulte os títulos do catálogo em tempo real e adicione novas mídias e lançamentos.',
+                    icon: Icons.video_library_outlined,
+                    buttonLabel: 'ACESSAR ACERVO DE FILMES',
                     onTap: () {
                       Navigator.push(
                         context,
@@ -207,14 +199,13 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  // Card Entidade 2: Agendamentos
+                  // Card Entidade 2: Locações
                   _buildFirestoreFeatureCard(
-                    context: context,
-                    title: 'Sessões & Agendamentos',
-                    tag: 'ENTIDADE 2',
-                    desc: 'Consulte os agendamentos de tatuagens marcadas em tempo real e crie novos agendamentos.',
-                    icon: Icons.calendar_month,
-                    buttonLabel: 'Ver Quadro de Agendamentos',
+                    title: 'Quadro de Locações',
+                    tag: 'ENTIDADE 2 (COLEÇÃO: LOCACAO)',
+                    desc: 'Acompanhe os aluguéis de filmes retirados pelos clientes e registre novas locações.',
+                    icon: Icons.receipt_long_outlined,
+                    buttonLabel: 'ACESSAR QUADRO DE LOCAÇÕES',
                     onTap: () {
                       Navigator.push(
                         context,
@@ -232,7 +223,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  static Widget _buildQuickStat({
+  static Widget _buildCinemaStat({
     required IconData icon,
     required String value,
     required String label,
@@ -243,24 +234,24 @@ class HomePage extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.secondaryBackground,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF282834)),
+          border: Border.all(color: const Color(0xFF2E2E3C)),
         ),
         child: Column(
           children: [
-            Icon(icon, color: AppTheme.primary, size: 20),
+            Icon(icon, color: AppTheme.secondary, size: 20),
             const SizedBox(height: 4),
             Text(
               value,
-              style: GoogleFonts.cinzel(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+              style: GoogleFonts.bebasNeue(
+                fontSize: 17,
+                letterSpacing: 1,
                 color: AppTheme.primaryText,
               ),
             ),
             Text(
               label,
               style: GoogleFonts.inter(
-                fontSize: 11,
+                fontSize: 10,
                 color: AppTheme.secondaryText,
               ),
             ),
@@ -271,7 +262,6 @@ class HomePage extends StatelessWidget {
   }
 
   static Widget _buildNavTile({
-    required BuildContext context,
     required IconData icon,
     required String title,
     required String subtitle,
@@ -285,14 +275,14 @@ class HomePage extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.secondaryBackground,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF2E2E38)),
+          border: Border.all(color: const Color(0xFF2E2E3C)),
         ),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withValues(alpha: 0.12),
+                color: AppTheme.primary.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(icon, color: AppTheme.primary, size: 22),
@@ -304,7 +294,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.cinzel(
+                    style: GoogleFonts.montserrat(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: AppTheme.primaryText,
@@ -333,7 +323,6 @@ class HomePage extends StatelessWidget {
   }
 
   static Widget _buildFirestoreFeatureCard({
-    required BuildContext context,
     required String title,
     required String tag,
     required String desc,
@@ -344,12 +333,12 @@ class HomePage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color(0xFF1B1B22),
+        color: const Color(0xFF1B1B24),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
+        border: Border.all(color: AppTheme.primary.withValues(alpha: 0.35)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
+            color: Colors.black.withValues(alpha: 0.25),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -366,7 +355,7 @@ class HomePage extends StatelessWidget {
                   color: AppTheme.primary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(icon, color: AppTheme.primary, size: 20),
+                child: Icon(icon, color: AppTheme.primary, size: 22),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -375,7 +364,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.cinzel(
+                      style: GoogleFonts.montserrat(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.primaryText,
@@ -383,10 +372,9 @@ class HomePage extends StatelessWidget {
                     ),
                     Text(
                       tag,
-                      style: GoogleFonts.oswald(
-                        fontSize: 11,
-                        color: AppTheme.primary,
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.bebasNeue(
+                        fontSize: 13,
+                        color: AppTheme.secondary,
                         letterSpacing: 1,
                       ),
                     ),
@@ -414,15 +402,14 @@ class HomePage extends StatelessWidget {
               label: Text(buttonLabel),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppTheme.primary,
-                foregroundColor: Colors.black,
+                foregroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                textStyle: GoogleFonts.oswald(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.8,
+                textStyle: GoogleFonts.bebasNeue(
+                  fontSize: 17,
+                  letterSpacing: 1.2,
                 ),
               ),
             ),

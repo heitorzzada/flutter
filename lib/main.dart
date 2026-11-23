@@ -15,16 +15,16 @@ void main() async {
     debugPrint('Nota: Firebase.initializeApp: $e');
   }
 
-  runApp(const AndreTattooStudioApp());
+  runApp(const CineMelhadoApp());
 }
 
-class AndreTattooStudioApp extends StatelessWidget {
-  const AndreTattooStudioApp({super.key});
+class CineMelhadoApp extends StatelessWidget {
+  const CineMelhadoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'André Tattoo Studio',
+      title: 'CineMelhado Vídeo Locadora',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.themeData,
       home: const HomePage(),

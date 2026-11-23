@@ -12,28 +12,28 @@ class CadastroAtividadePage extends StatefulWidget {
 
 class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
   final _formKey = GlobalKey<FormState>();
-  final _tituloController = TextEditingController();
-  final _descricaoController = TextEditingController();
+  final _clienteController = TextEditingController();
+  final _detalhesController = TextEditingController();
 
   final FirestoreService _firestoreService = FirestoreService();
   bool _salvando = false;
 
   @override
   void dispose() {
-    _tituloController.dispose();
-    _descricaoController.dispose();
+    _clienteController.dispose();
+    _detalhesController.dispose();
     super.dispose();
   }
 
-  Future<void> _salvarAgendamento() async {
-    final titulo = _tituloController.text.trim();
-    final descricao = _descricaoController.text.trim();
+  Future<void> _salvarLocacao() async {
+    final cliente = _clienteController.text.trim();
+    final detalhes = _detalhesController.text.trim();
 
-    if (titulo.isEmpty || descricao.isEmpty) {
+    if (cliente.isEmpty || detalhes.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Por favor, preencha todos os campos da sessão!',
+            'Por favor, preencha todos os campos da locação!',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: AppTheme.error,
@@ -46,20 +46,20 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
     setState(() => _salvando = true);
 
     try {
-      await _firestoreService.cadastrarAgendamento(
-        titulo: titulo,
-        descricao: descricao,
+      await _firestoreService.cadastrarLocacao(
+        clienteNome: cliente,
+        detalhesLocacao: detalhes,
       );
 
-      _tituloController.clear();
-      _descricaoController.clear();
+      _clienteController.clear();
+      _detalhesController.clear();
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'Agendamento de tattoo registrado com sucesso!',
-              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              'Locação de filme registrada com sucesso! 🎟️',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             backgroundColor: AppTheme.primary,
             duration: Duration(seconds: 3),
@@ -70,7 +70,7 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erro ao salvar agendamento: $e'),
+            content: Text('Erro ao salvar locação: $e'),
             backgroundColor: AppTheme.error,
           ),
         );
@@ -89,15 +89,11 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Novo Agendamento',
-            style: GoogleFonts.cinzel(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.primary,
-            ),
+            'REGISTRAR LOCAÇÃO',
+            style: GoogleFonts.bebasNeue(fontSize: 24, letterSpacing: 1.2),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.primary, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -110,48 +106,48 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Registre uma nova sessão de tatuagem',
+                    'Novo Aluguel de Filmes',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.cinzel(
-                      fontSize: 16,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: AppTheme.primary,
+                      color: AppTheme.primaryText,
                     ),
                   ),
                   const SizedBox(height: 24),
 
-                  // Título / Ideia
+                  // Nome do Cliente
                   TextFormField(
-                    controller: _tituloController,
+                    controller: _clienteController,
                     style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Ideia / Nome da Tatuagem',
-                      hintText: 'Ex.: Dragão Oriental no Antebraço',
-                      prefixIcon: Icon(Icons.create, color: AppTheme.primary),
+                      labelText: 'Nome do Sócio / Cliente',
+                      hintText: 'Ex.: Lucas Melhado',
+                      prefixIcon: Icon(Icons.person_pin_outlined, color: AppTheme.primary),
                     ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Descrição / Detalhes
+                  // Filme e Período
                   TextFormField(
-                    controller: _descricaoController,
+                    controller: _detalhesController,
                     maxLines: 3,
                     style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Detalhes da Sessão',
-                      hintText: 'Ex.: Tamanho 15cm, sombreado preto e cinza, cliente André.',
+                      labelText: 'Filmes Alugados & Prazos',
+                      hintText: 'Ex.: Interestelar (Bluray) + Matrix (VHS) - Prazo: 3 dias.',
                       alignLabelWithHint: true,
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(bottom: 40),
-                        child: Icon(Icons.notes, color: AppTheme.primary),
+                        child: Icon(Icons.confirmation_number_outlined, color: AppTheme.primary),
                       ),
                     ),
                   ),
                   const SizedBox(height: 32),
 
-                  // Botão Salvar
+                  // Botão Salvar Locação
                   ElevatedButton(
-                    onPressed: _salvando ? null : _salvarAgendamento,
+                    onPressed: _salvando ? null : _salvarLocacao,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: AppTheme.primary,
@@ -163,16 +159,15 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
                             width: 22,
                             child: CircularProgressIndicator(
                               strokeWidth: 2.5,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           )
                         : Text(
-                            'Salvar Agendamento',
-                            style: GoogleFonts.oswald(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              letterSpacing: 1,
+                            'CONFIRMAR LOCAÇÃO',
+                            style: GoogleFonts.bebasNeue(
+                              fontSize: 20,
+                              letterSpacing: 1.5,
+                              color: Colors.white,
                             ),
                           ),
                   ),
@@ -183,11 +178,11 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.list, color: AppTheme.primary),
                     label: Text(
-                      'Ver Lista de Agendamentos',
-                      style: GoogleFonts.oswald(
+                      'VER QUADRO DE LOCAÇÕES',
+                      style: GoogleFonts.bebasNeue(
                         color: AppTheme.primary,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1,
+                        fontSize: 18,
+                        letterSpacing: 1.2,
                       ),
                     ),
                     style: OutlinedButton.styleFrom(

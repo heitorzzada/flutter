@@ -11,15 +11,11 @@ class DiagramasPage extends StatelessWidget {
       backgroundColor: AppTheme.primaryBackground,
       appBar: AppBar(
         title: Text(
-          'Arquitetura do Sistema',
-          style: GoogleFonts.cinzel(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppTheme.primary,
-          ),
+          'ARQUITETURA DA LOCADORA',
+          style: GoogleFonts.bebasNeue(fontSize: 24, letterSpacing: 1.5),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.primary, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -29,7 +25,7 @@ class DiagramasPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header da tela
+              // Card Informativo
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
@@ -46,7 +42,7 @@ class DiagramasPage extends StatelessWidget {
                         color: AppTheme.primary.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.developer_mode, color: AppTheme.primary, size: 24),
+                      child: const Icon(Icons.schema, color: AppTheme.primary, size: 24),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -54,16 +50,15 @@ class DiagramasPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'ENGENHARIA DO APP',
-                            style: GoogleFonts.oswald(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                            'SISTEMA CINEMELHADO',
+                            style: GoogleFonts.bebasNeue(
+                              fontSize: 16,
+                              letterSpacing: 1.2,
                               color: AppTheme.primary,
-                              letterSpacing: 1.5,
                             ),
                           ),
                           Text(
-                            'Diagramas técnicos baseados nas diretrizes do projeto integrador.',
+                            'Modelagem técnica do sistema de locação e acervo no Cloud Firestore.',
                             style: GoogleFonts.inter(
                               fontSize: 12,
                               color: AppTheme.secondaryText,
@@ -79,35 +74,33 @@ class DiagramasPage extends StatelessWidget {
 
               Text(
                 '1. DIAGRAMA DE CASOS DE USO',
-                style: GoogleFonts.oswald(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.primary,
+                style: GoogleFonts.bebasNeue(
+                  fontSize: 18,
                   letterSpacing: 1.2,
+                  color: AppTheme.secondary,
                 ),
               ),
               const SizedBox(height: 10),
 
-              // Card Caso de Uso
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: AppTheme.secondaryBackground,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFF2E2E38)),
+                  border: Border.all(color: const Color(0xFF2E2E3C)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.person, color: AppTheme.primary, size: 20),
+                        const Icon(Icons.movie, color: AppTheme.primary, size: 20),
                         const SizedBox(width: 8),
                         Text(
-                          'Atores & Interações',
-                          style: GoogleFonts.cinzel(
-                            fontSize: 16,
+                          'Fluxos de Aluguel & Acervo',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: AppTheme.primaryText,
                           ),
@@ -115,10 +108,10 @@ class DiagramasPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    _buildUseCaseRow('Cliente', 'Acessa informações sobre o tatuador e manual de cicatrização.'),
-                    _buildUseCaseRow('Cliente', 'Registra solicitações de agendamento de tattoo (Entidade 2).'),
-                    _buildUseCaseRow('Tatuador / Admin', 'Cadastra novos artistas e especialidades no estúdio (Entidade 1).'),
-                    _buildUseCaseRow('Sistema', 'Sincroniza registros em tempo real via Cloud Firestore.'),
+                    _buildUseCaseRow('Cliente', 'Consulta acervo de filmes disponíveis (Entidade 1).'),
+                    _buildUseCaseRow('Cliente', 'Realiza locação de títulos por período (Entidade 2).'),
+                    _buildUseCaseRow('Atendente', 'Cadastra novos títulos e mídias no acervo da locadora.'),
+                    _buildUseCaseRow('Sistema', 'Atualiza o status de locações e sincroniza via Firestore.'),
                   ],
                 ),
               ),
@@ -126,38 +119,37 @@ class DiagramasPage extends StatelessWidget {
 
               Text(
                 '2. DIAGRAMA DE CLASSES & FIRESTORE',
-                style: GoogleFonts.oswald(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.primary,
+                style: GoogleFonts.bebasNeue(
+                  fontSize: 18,
                   letterSpacing: 1.2,
+                  color: AppTheme.secondary,
                 ),
               ),
               const SizedBox(height: 10),
 
-              // Card Classe 1: Tatuador
+              // Classe 1: Filme
               _buildClassCard(
-                className: 'Tatuador',
-                collectionName: 'tatuador',
+                className: 'Filme',
+                collectionName: 'filme',
                 fields: [
-                  {'name': 'id', 'type': 'String', 'desc': 'Identificador único do documento'},
-                  {'name': 'nome', 'type': 'String', 'desc': 'Nome do artista/tatuador'},
-                  {'name': 'estilo', 'type': 'String', 'desc': 'Especialidade (Blackwork, Fineline...)'},
-                  {'name': 'experiencia', 'type': 'String', 'desc': 'Tempo de atuação ou rede social'},
-                  {'name': 'criado_em', 'type': 'Timestamp', 'desc': 'Data e hora do cadastro no servidor'},
+                  {'name': 'id', 'type': 'String', 'desc': 'Chave primária do documento'},
+                  {'name': 'titulo', 'type': 'String', 'desc': 'Nome do filme'},
+                  {'name': 'genero', 'type': 'String', 'desc': 'Gênero (Ficção, Clássico...)'},
+                  {'name': 'ano_classificacao', 'type': 'String', 'desc': 'Ano, mídia e faixa etária'},
+                  {'name': 'criado_em', 'type': 'Timestamp', 'desc': 'Data de cadastro no acervo'},
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 14),
 
-              // Card Classe 2: Agendamento
+              // Classe 2: Locacao
               _buildClassCard(
-                className: 'Agendamento',
-                collectionName: 'agendamento',
+                className: 'Locacao',
+                collectionName: 'locacao',
                 fields: [
-                  {'name': 'id', 'type': 'String', 'desc': 'Identificador único do documento'},
-                  {'name': 'titulo', 'type': 'String', 'desc': 'Ideia ou nome da tatuagem'},
-                  {'name': 'descricao', 'type': 'String', 'desc': 'Detalhes da sessão, tamanho e local'},
-                  {'name': 'criado_em', 'type': 'Timestamp', 'desc': 'Data e hora do cadastro no servidor'},
+                  {'name': 'id', 'type': 'String', 'desc': 'Chave primária do documento'},
+                  {'name': 'cliente_nome', 'type': 'String', 'desc': 'Nome do cliente locatário'},
+                  {'name': 'detalhes', 'type': 'String', 'desc': 'Filmes alugados e prazo'},
+                  {'name': 'criado_em', 'type': 'Timestamp', 'desc': 'Data da retirada da mídia'},
                 ],
               ),
               const SizedBox(height: 20),
@@ -216,7 +208,7 @@ class DiagramasPage extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.secondaryBackground,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFF2E2E38)),
+        border: Border.all(color: const Color(0xFF2E2E3C)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,13 +221,13 @@ class DiagramasPage extends StatelessWidget {
                   color: AppTheme.primary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: const Icon(Icons.table_chart_outlined, color: AppTheme.primary, size: 18),
+                child: const Icon(Icons.table_rows_outlined, color: AppTheme.primary, size: 18),
               ),
               const SizedBox(width: 10),
               Text(
                 'Classe $className',
-                style: GoogleFonts.cinzel(
-                  fontSize: 16,
+                style: GoogleFonts.montserrat(
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.primaryText,
                 ),
@@ -245,15 +237,15 @@ class DiagramasPage extends StatelessWidget {
                 'Coleção: $collectionName',
                 style: GoogleFonts.inter(
                   fontSize: 11,
-                  color: AppTheme.primary,
-                  fontWeight: FontWeight.w500,
+                  color: AppTheme.secondary,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          const Divider(color: Color(0xFF282834), thickness: 1),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
+          const Divider(color: Color(0xFF2A2A38), thickness: 1),
+          const SizedBox(height: 6),
           ...fields.map(
             (field) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),

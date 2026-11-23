@@ -12,31 +12,31 @@ class CadastroIntegrantePage extends StatefulWidget {
 
 class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
   final _formKey = GlobalKey<FormState>();
-  final _nomeController = TextEditingController();
-  final _estiloController = TextEditingController();
-  final _experienciaController = TextEditingController();
+  final _tituloController = TextEditingController();
+  final _generoController = TextEditingController();
+  final _anoController = TextEditingController();
 
   final FirestoreService _firestoreService = FirestoreService();
   bool _salvando = false;
 
   @override
   void dispose() {
-    _nomeController.dispose();
-    _estiloController.dispose();
-    _experienciaController.dispose();
+    _tituloController.dispose();
+    _generoController.dispose();
+    _anoController.dispose();
     super.dispose();
   }
 
-  Future<void> _salvarTatuador() async {
-    final nome = _nomeController.text.trim();
-    final estilo = _estiloController.text.trim();
-    final experiencia = _experienciaController.text.trim();
+  Future<void> _salvarFilme() async {
+    final titulo = _tituloController.text.trim();
+    final genero = _generoController.text.trim();
+    final ano = _anoController.text.trim();
 
-    if (nome.isEmpty || estilo.isEmpty || experiencia.isEmpty) {
+    if (titulo.isEmpty || genero.isEmpty || ano.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Por favor, preencha todos os campos do tatuador!',
+            'Por favor, preencha todos os campos do filme!',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: AppTheme.error,
@@ -49,22 +49,22 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
     setState(() => _salvando = true);
 
     try {
-      await _firestoreService.cadastrarTatuador(
-        nome: nome,
-        estilo: estilo,
-        experiencia: experiencia,
+      await _firestoreService.cadastrarFilme(
+        titulo: titulo,
+        genero: genero,
+        anoClassificacao: ano,
       );
 
-      _nomeController.clear();
-      _estiloController.clear();
-      _experienciaController.clear();
+      _tituloController.clear();
+      _generoController.clear();
+      _anoController.clear();
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'Tatuador cadastrado com sucesso no estúdio!',
-              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              'Filme adicionado ao acervo com sucesso! 🎬',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             backgroundColor: AppTheme.primary,
             duration: Duration(seconds: 3),
@@ -75,7 +75,7 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erro ao salvar: $e'),
+            content: Text('Erro ao salvar filme: $e'),
             backgroundColor: AppTheme.error,
           ),
         );
@@ -94,15 +94,11 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Cadastro de Tatuador',
-            style: GoogleFonts.cinzel(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.primary,
-            ),
+            'CADASTRAR NOVO FILME',
+            style: GoogleFonts.bebasNeue(fontSize: 24, letterSpacing: 1.2),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.primary, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -115,55 +111,55 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Cadastre um novo artista no estúdio',
+                    'Adicionar Mídia ao Acervo CineMelhado',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.cinzel(
-                      fontSize: 16,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: AppTheme.primary,
+                      color: AppTheme.primaryText,
                     ),
                   ),
                   const SizedBox(height: 24),
 
-                  // Nome do Tatuador
+                  // Título do Filme
                   TextFormField(
-                    controller: _nomeController,
+                    controller: _tituloController,
                     style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Nome do Artista',
-                      hintText: 'Ex.: André Silva',
-                      prefixIcon: Icon(Icons.brush, color: AppTheme.primary),
+                      labelText: 'Título do Filme',
+                      hintText: 'Ex.: Interestelar',
+                      prefixIcon: Icon(Icons.movie_creation_outlined, color: AppTheme.primary),
                     ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Estilo Artístico
+                  // Gênero
                   TextFormField(
-                    controller: _estiloController,
+                    controller: _generoController,
                     style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Estilo Principal',
-                      hintText: 'Ex.: Blackwork / Fineline / Old School',
-                      prefixIcon: Icon(Icons.auto_awesome, color: AppTheme.primary),
+                      labelText: 'Gênero Cinematográfico',
+                      hintText: 'Ex.: Ficção Científica / Suspense / Clássico',
+                      prefixIcon: Icon(Icons.category_outlined, color: AppTheme.primary),
                     ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Experiência ou Redes
+                  // Ano e Classificação
                   TextFormField(
-                    controller: _experienciaController,
+                    controller: _anoController,
                     style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Experiência / Contato',
-                      hintText: 'Ex.: 5 anos de experiência | @andre.ink',
-                      prefixIcon: Icon(Icons.badge_outlined, color: AppTheme.primary),
+                      labelText: 'Ano / Mídia / Classificação',
+                      hintText: 'Ex.: 2014 | Bluray 4K | 12 Anos',
+                      prefixIcon: Icon(Icons.album_outlined, color: AppTheme.primary),
                     ),
                   ),
                   const SizedBox(height: 32),
 
-                  // Botão Salvar
+                  // Botão Salvar Filme
                   ElevatedButton(
-                    onPressed: _salvando ? null : _salvarTatuador,
+                    onPressed: _salvando ? null : _salvarFilme,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: AppTheme.primary,
@@ -175,31 +171,30 @@ class _CadastroIntegrantePageState extends State<CadastroIntegrantePage> {
                             width: 22,
                             child: CircularProgressIndicator(
                               strokeWidth: 2.5,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           )
                         : Text(
-                            'Salvar Tatuador',
-                            style: GoogleFonts.oswald(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              letterSpacing: 1,
+                            'SALVAR NO ACERVO',
+                            style: GoogleFonts.bebasNeue(
+                              fontSize: 20,
+                              letterSpacing: 1.5,
+                              color: Colors.white,
                             ),
                           ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Voltar para lista
+                  // Voltar
                   OutlinedButton.icon(
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.list, color: AppTheme.primary),
                     label: Text(
-                      'Ver Lista de Tatuadores',
-                      style: GoogleFonts.oswald(
+                      'VER ACERVO DE FILMES',
+                      style: GoogleFonts.bebasNeue(
                         color: AppTheme.primary,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1,
+                        fontSize: 18,
+                        letterSpacing: 1.2,
                       ),
                     ),
                     style: OutlinedButton.styleFrom(

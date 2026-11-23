@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/tatuador.dart';
-import '../models/agendamento.dart';
+import '../models/filme.dart';
+import '../models/locacao.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  CollectionReference get _tatuadorRef => _firestore.collection('tatuador');
-  CollectionReference get _agendamentoRef => _firestore.collection('agendamento');
+  CollectionReference get _filmeRef => _firestore.collection('filme');
+  CollectionReference get _locacaoRef => _firestore.collection('locacao');
 
   // ==========================================
-  // ENTIDADE 1: TATUADOR (Artistas do Estúdio)
+  // ENTIDADE 1: FILME (Acervo da Locadora)
   // ==========================================
 
-  Stream<List<Tatuador>> streamTatuadores() {
-    return _tatuadorRef.snapshots().map((snapshot) {
-      final list = snapshot.docs.map((doc) => Tatuador.fromFirestore(doc)).toList();
+  Stream<List<Filme>> streamFilmes() {
+    return _filmeRef.snapshots().map((snapshot) {
+      final list = snapshot.docs.map((doc) => Filme.fromFirestore(doc)).toList();
       list.sort((a, b) {
         if (a.criadoEm == null && b.criadoEm == null) return 0;
         if (a.criadoEm == null) return 1;
@@ -25,26 +25,26 @@ class FirestoreService {
     });
   }
 
-  Future<void> cadastrarTatuador({
-    required String nome,
-    required String estilo,
-    required String experiencia,
+  Future<void> cadastrarFilme({
+    required String titulo,
+    required String genero,
+    required String anoClassificacao,
   }) async {
-    await _tatuadorRef.add({
-      'nome': nome.trim(),
-      'estilo': estilo.trim(),
-      'experiencia': experiencia.trim(),
+    await _filmeRef.add({
+      'titulo': titulo.trim(),
+      'genero': genero.trim(),
+      'ano_classificacao': anoClassificacao.trim(),
       'criado_em': FieldValue.serverTimestamp(),
     });
   }
 
   // ==========================================
-  // ENTIDADE 2: AGENDAMENTO / SESSÕES
+  // ENTIDADE 2: LOCAÇÃO (Aluguéis de Filmes)
   // ==========================================
 
-  Stream<List<Agendamento>> streamAgendamentos() {
-    return _agendamentoRef.snapshots().map((snapshot) {
-      final list = snapshot.docs.map((doc) => Agendamento.fromFirestore(doc)).toList();
+  Stream<List<Locacao>> streamLocacoes() {
+    return _locacaoRef.snapshots().map((snapshot) {
+      final list = snapshot.docs.map((doc) => Locacao.fromFirestore(doc)).toList();
       list.sort((a, b) {
         if (a.criadoEm == null && b.criadoEm == null) return 0;
         if (a.criadoEm == null) return 1;
@@ -55,13 +55,13 @@ class FirestoreService {
     });
   }
 
-  Future<void> cadastrarAgendamento({
-    required String titulo,
-    required String descricao,
+  Future<void> cadastrarLocacao({
+    required String clienteNome,
+    required String detalhesLocacao,
   }) async {
-    await _agendamentoRef.add({
-      'titulo': titulo.trim(),
-      'descricao': descricao.trim(),
+    await _locacaoRef.add({
+      'cliente_nome': clienteNome.trim(),
+      'detalhes': detalhesLocacao.trim(),
       'criado_em': FieldValue.serverTimestamp(),
     });
   }

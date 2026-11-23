@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Paleta de Cores Premium para Estúdio de Tatuagem (Dark / Ouro / Carmesim)
-  static const Color primary = Color(0xFFD4AF37); // Ouro envelhecido metálico
-  static const Color primaryDark = Color(0xFF141416); // Preto carbono
-  static const Color secondary = Color(0xFFA31D1D); // Carmesim tinta
-  static const Color accent = Color(0xFFE5C158); // Ouro claro
-  static const Color primaryBackground = Color(0xFF121214); // Fundo escuro fosco
-  static const Color secondaryBackground = Color(0xFF1E1E24); // Fundo dos cards escuro
-  static const Color surfaceColor = Color(0xFF282830); // Superfície elevada
-  static const Color primaryText = Color(0xFFF5F5F7); // Branco leve
-  static const Color secondaryText = Color(0xFFA8A8B4); // Cinza médio
+  // Paleta de Cores Cinemática (CineMelhado Locadora)
+  static const Color primary = Color(0xFFE50914); // Vermelho cinema / bilheteria
+  static const Color primaryDark = Color(0xFF0F0F12); // Preto escuro fosco
+  static const Color secondary = Color(0xFFFFC107); // Ouro pipoca / bilhete
+  static const Color accent = Color(0xFFFF5252); // Vermelho vibrante
+  static const Color primaryBackground = Color(0xFF141418); // Fundo escuro cinema
+  static const Color secondaryBackground = Color(0xFF1F1F26); // Fundo dos cards
+  static const Color surfaceColor = Color(0xFF282834); // Superfície elevada
+  static const Color primaryText = Color(0xFFF8F9FA); // Branco puro
+  static const Color secondaryText = Color(0xFFA5A5B5); // Cinza legenda
   static const Color alternate = Colors.white;
-  static const Color error = Color(0xFFFF5963);
+  static const Color error = Color(0xFFFF4D4D);
   static const Color success = Color(0xFF2ECC71);
 
   static ThemeData get themeData {
@@ -31,35 +31,33 @@ class AppTheme {
       scaffoldBackgroundColor: primaryBackground,
       appBarTheme: AppBarTheme(
         backgroundColor: primaryDark,
-        foregroundColor: primary,
+        foregroundColor: Colors.white,
         elevation: 3,
         centerTitle: false,
-        titleTextStyle: GoogleFonts.cinzel(
-          color: primary,
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
+        titleTextStyle: GoogleFonts.bebasNeue(
+          color: Colors.white,
+          fontSize: 26,
+          letterSpacing: 1.5,
         ),
       ),
       cardTheme: CardThemeData(
         color: secondaryBackground,
         elevation: 3,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: Color(0xFF2E2E38)),
+          borderRadius: BorderRadius.circular(14),
+          side: const BorderSide(color: Color(0xFF2E2E3C)),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primary,
-          foregroundColor: Colors.black,
+          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          textStyle: GoogleFonts.oswald(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
+          textStyle: GoogleFonts.bebasNeue(
+            fontSize: 18,
+            letterSpacing: 1.2,
           ),
         ),
       ),
@@ -76,11 +74,11 @@ class AppTheme {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF333340)),
+          borderSide: const BorderSide(color: Color(0xFF333344)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF333340)),
+          borderSide: const BorderSide(color: Color(0xFF333344)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

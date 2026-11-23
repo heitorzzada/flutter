@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../models/tatuador.dart';
+import '../models/filme.dart';
 import '../services/firestore_service.dart';
 import '../theme/app_theme.dart';
 import 'cadastro_integrante_page.dart';
@@ -16,15 +16,11 @@ class ListaIntegrantePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Tatuadores do Estúdio',
-          style: GoogleFonts.cinzel(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppTheme.primary,
-          ),
+          'ACERVO DE FILMES',
+          style: GoogleFonts.bebasNeue(fontSize: 24, letterSpacing: 1.5),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.primary, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -32,8 +28,8 @@ class ListaIntegrantePage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: StreamBuilder<List<Tatuador>>(
-                stream: firestoreService.streamTatuadores(),
+              child: StreamBuilder<List<Filme>>(
+                stream: firestoreService.streamFilmes(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -48,7 +44,7 @@ class ListaIntegrantePage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Text(
-                          'Erro ao carregar artistas: ${snapshot.error}',
+                          'Erro ao carregar acervo: ${snapshot.error}',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(color: AppTheme.error),
                         ),
@@ -56,22 +52,22 @@ class ListaIntegrantePage extends StatelessWidget {
                     );
                   }
 
-                  final tatuadores = snapshot.data ?? [];
+                  final filmes = snapshot.data ?? [];
 
-                  if (tatuadores.isEmpty) {
+                  if (filmes.isEmpty) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.brush_outlined,
+                            Icons.movie_outlined,
                             size: 64,
                             color: Colors.grey.shade600,
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'Nenhum tatuador cadastrado ainda.',
-                            style: GoogleFonts.inter(
+                            'Nenhum filme cadastrado no acervo.',
+                            style: GoogleFonts.montserrat(
                               fontSize: 16,
                               color: AppTheme.secondaryText,
                               fontWeight: FontWeight.w500,
@@ -79,7 +75,7 @@ class ListaIntegrantePage extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Toque no botão dourado abaixo para cadastrar.',
+                            'Clique no botão vermelho abaixo para adicionar.',
                             style: GoogleFonts.inter(
                               fontSize: 14,
                               color: Colors.grey.shade500,
@@ -92,11 +88,11 @@ class ListaIntegrantePage extends StatelessWidget {
 
                   return ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    itemCount: tatuadores.length,
+                    itemCount: filmes.length,
                     itemBuilder: (context, index) {
-                      final tatuador = tatuadores[index];
-                      final dataStr = tatuador.criadoEm != null
-                          ? DateFormat('dd/MM/yyyy HH:mm').format(tatuador.criadoEm!)
+                      final filme = filmes[index];
+                      final dataStr = filme.criadoEm != null
+                          ? DateFormat('dd/MM/yyyy HH:mm').format(filme.criadoEm!)
                           : null;
 
                       return Card(
@@ -104,25 +100,25 @@ class ListaIntegrantePage extends StatelessWidget {
                         color: AppTheme.secondaryBackground,
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: const BorderSide(color: Color(0xFF2E2E38)),
+                          borderRadius: BorderRadius.circular(14),
+                          side: const BorderSide(color: Color(0xFF2E2E3C)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Row(
                             children: [
-                              CircleAvatar(
-                                radius: 24,
-                                backgroundColor: AppTheme.primary.withValues(alpha: 0.2),
-                                child: Text(
-                                  tatuador.nome.isNotEmpty
-                                      ? tatuador.nome[0].toUpperCase()
-                                      : 'T',
-                                  style: GoogleFonts.cinzel(
-                                    color: AppTheme.primary,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              Container(
+                                width: 48,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  color: AppTheme.primary.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
+                                ),
+                                child: const Icon(
+                                  Icons.play_circle_filled,
+                                  color: AppTheme.primary,
+                                  size: 28,
                                 ),
                               ),
                               const SizedBox(width: 14),
@@ -131,9 +127,9 @@ class ListaIntegrantePage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      tatuador.nome,
-                                      style: GoogleFonts.cinzel(
-                                        fontSize: 18,
+                                      filme.titulo,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                         color: AppTheme.primaryText,
                                       ),
@@ -141,44 +137,43 @@ class ListaIntegrantePage extends StatelessWidget {
                                     const SizedBox(height: 4),
                                     Row(
                                       children: [
-                                        const Icon(Icons.style, size: 14, color: AppTheme.primary),
-                                        const SizedBox(width: 5),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.primary.withValues(alpha: 0.2),
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            filme.genero,
+                                            style: GoogleFonts.inter(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppTheme.accent,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
                                         Expanded(
                                           child: Text(
-                                            'Estilo: ${tatuador.estilo}',
+                                            filme.anoClassificacao,
                                             style: GoogleFonts.inter(
-                                              fontSize: 14,
+                                              fontSize: 13,
                                               color: AppTheme.secondaryText,
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 2),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.star_border, size: 14, color: AppTheme.accent),
-                                        const SizedBox(width: 5),
-                                        Text(
-                                          tatuador.experiencia,
-                                          style: GoogleFonts.inter(
-                                            fontSize: 13,
-                                            color: AppTheme.accent,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                    if (dataStr != null) ...[
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        'Cadastrado em: $dataStr',
+                                        style: GoogleFonts.inter(
+                                          fontSize: 11,
+                                          color: Colors.grey.shade500,
                                         ),
-                                        if (dataStr != null) ...[
-                                          const Spacer(),
-                                          Text(
-                                            dataStr,
-                                            style: GoogleFonts.inter(
-                                              fontSize: 11,
-                                              color: Colors.grey.shade500,
-                                            ),
-                                          ),
-                                        ],
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ],
                                 ),
                               ),
@@ -192,7 +187,7 @@ class ListaIntegrantePage extends StatelessWidget {
               ),
             ),
 
-            // Botão Inferior de Cadastro
+            // Botão Adicionar Filme
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
@@ -207,14 +202,12 @@ class ListaIntegrantePage extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.add, color: Colors.black, size: 24),
+                  icon: const Icon(Icons.add, color: Colors.white, size: 24),
                   label: Text(
-                    '+ Cadastrar Tatuador',
-                    style: GoogleFonts.oswald(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      letterSpacing: 1,
+                    '+ CADASTRAR FILME NO ACERVO',
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 18,
+                      letterSpacing: 1.2,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(

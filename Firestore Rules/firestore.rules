@@ -1,24 +1,19 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Coleções para o Estúdio de Tatuagem
-    match /tatuador/{document} {
+    // Coleções para o Sistema da Locadora de Filmes
+    match /filme/{document} {
       allow create, read: if true;
       allow write, delete: if true;
     }
 
-    match /agendamento/{document} {
+    match /locacao/{document} {
       allow create, read: if true;
       allow write, delete: if true;
     }
 
     // Compatibilidade com coleções anteriores
-    match /integrante/{document} {
-      allow create, read: if true;
-      allow write, delete: if true;
-    }
-
-    match /atividade/{document} {
+    match /{document=**} {
       allow create, read: if true;
       allow write, delete: if true;
     }

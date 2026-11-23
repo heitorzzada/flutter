@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../models/agendamento.dart';
+import '../models/locacao.dart';
 import '../services/firestore_service.dart';
 import '../theme/app_theme.dart';
 import 'cadastro_atividade_page.dart';
@@ -16,15 +16,11 @@ class ListaAtividadePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Quadro de Agendamentos',
-          style: GoogleFonts.cinzel(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppTheme.primary,
-          ),
+          'QUADRO DE LOCAÇÕES',
+          style: GoogleFonts.bebasNeue(fontSize: 24, letterSpacing: 1.5),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.primary, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -32,8 +28,8 @@ class ListaAtividadePage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: StreamBuilder<List<Agendamento>>(
-                stream: firestoreService.streamAgendamentos(),
+              child: StreamBuilder<List<Locacao>>(
+                stream: firestoreService.streamLocacoes(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -48,7 +44,7 @@ class ListaAtividadePage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Text(
-                          'Erro ao carregar agendamentos: ${snapshot.error}',
+                          'Erro ao carregar locações: ${snapshot.error}',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(color: AppTheme.error),
                         ),
@@ -56,22 +52,22 @@ class ListaAtividadePage extends StatelessWidget {
                     );
                   }
 
-                  final agendamentos = snapshot.data ?? [];
+                  final locacoes = snapshot.data ?? [];
 
-                  if (agendamentos.isEmpty) {
+                  if (locacoes.isEmpty) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.calendar_month_outlined,
+                            Icons.receipt_long_outlined,
                             size: 64,
                             color: Colors.grey.shade600,
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'Nenhum agendamento registrado ainda.',
-                            style: GoogleFonts.inter(
+                            'Nenhuma locação ativa no momento.',
+                            style: GoogleFonts.montserrat(
                               fontSize: 16,
                               color: AppTheme.secondaryText,
                               fontWeight: FontWeight.w500,
@@ -79,7 +75,7 @@ class ListaAtividadePage extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Toque no botão dourado abaixo para agendar.',
+                            'Clique no botão abaixo para registrar um aluguel.',
                             style: GoogleFonts.inter(
                               fontSize: 14,
                               color: Colors.grey.shade500,
@@ -92,11 +88,11 @@ class ListaAtividadePage extends StatelessWidget {
 
                   return ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    itemCount: agendamentos.length,
+                    itemCount: locacoes.length,
                     itemBuilder: (context, index) {
-                      final agendamento = agendamentos[index];
-                      final dataStr = agendamento.criadoEm != null
-                          ? DateFormat('dd/MM/yyyy HH:mm').format(agendamento.criadoEm!)
+                      final locacao = locacoes[index];
+                      final dataStr = locacao.criadoEm != null
+                          ? DateFormat('dd/MM/yyyy HH:mm').format(locacao.criadoEm!)
                           : null;
 
                       return Card(
@@ -104,8 +100,8 @@ class ListaAtividadePage extends StatelessWidget {
                         color: AppTheme.secondaryBackground,
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: const BorderSide(color: Color(0xFF2E2E38)),
+                          borderRadius: BorderRadius.circular(14),
+                          side: const BorderSide(color: Color(0xFF2E2E3C)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(14),
@@ -116,13 +112,13 @@ class ListaAtividadePage extends StatelessWidget {
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: AppTheme.primary.withValues(alpha: 0.15),
+                                  color: AppTheme.secondary.withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
+                                  border: Border.all(color: AppTheme.secondary.withValues(alpha: 0.3)),
                                 ),
                                 child: const Icon(
-                                  Icons.colorize,
-                                  color: AppTheme.primary,
+                                  Icons.confirmation_number,
+                                  color: AppTheme.secondary,
                                   size: 24,
                                 ),
                               ),
@@ -132,18 +128,18 @@ class ListaAtividadePage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      agendamento.titulo,
-                                      style: GoogleFonts.cinzel(
-                                        fontSize: 17,
+                                      locacao.clienteNome,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                         color: AppTheme.primaryText,
                                       ),
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      agendamento.descricao,
+                                      locacao.detalhesLocacao,
                                       style: GoogleFonts.inter(
-                                        fontSize: 14,
+                                        fontSize: 13,
                                         color: AppTheme.secondaryText,
                                         height: 1.3,
                                       ),
@@ -153,13 +149,13 @@ class ListaAtividadePage extends StatelessWidget {
                                       Row(
                                         children: [
                                           Icon(
-                                            Icons.access_time,
-                                            size: 13,
+                                            Icons.calendar_today,
+                                            size: 12,
                                             color: Colors.grey.shade500,
                                           ),
                                           const SizedBox(width: 4),
                                           Text(
-                                            dataStr,
+                                            'Retirado em: $dataStr',
                                             style: GoogleFonts.inter(
                                               fontSize: 11,
                                               color: Colors.grey.shade500,
@@ -181,7 +177,7 @@ class ListaAtividadePage extends StatelessWidget {
               ),
             ),
 
-            // Botão Inferior de Cadastro
+            // Botão Nova Locação
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
@@ -196,14 +192,12 @@ class ListaAtividadePage extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.add, color: Colors.black, size: 24),
+                  icon: const Icon(Icons.add, color: Colors.white, size: 24),
                   label: Text(
-                    '+ Cadastrar Agendamento',
-                    style: GoogleFonts.oswald(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      letterSpacing: 1,
+                    '+ REGISTRAR NOVA LOCAÇÃO',
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 18,
+                      letterSpacing: 1.2,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
