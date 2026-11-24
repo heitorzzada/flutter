@@ -11,8 +11,8 @@ class ObjetivosPage extends StatelessWidget {
       backgroundColor: AppTheme.primaryBackground,
       appBar: AppBar(
         title: Text(
-          'Manual de Cicatrização',
-          style: GoogleFonts.cinzel(
+          'Tradição & Segredos da Massa',
+          style: GoogleFonts.fraunces(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: AppTheme.primary,
@@ -35,7 +35,7 @@ class ObjetivosPage extends StatelessWidget {
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF26221A), Color(0xFF1A1A22)],
+                    colors: [Color(0xFF281C13), Color(0xFF1E1610)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -50,7 +50,7 @@ class ObjetivosPage extends StatelessWidget {
                         color: AppTheme.primary,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.verified, color: Colors.black, size: 26),
+                      child: const Icon(Icons.grain, color: Color(0xFF18130E), size: 26),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -58,8 +58,8 @@ class ObjetivosPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'PROTOCOLO ANDRÉ TATTOO',
-                            style: GoogleFonts.cinzel(
+                            'MANIFESTO HORAS PÃES',
+                            style: GoogleFonts.fraunces(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: AppTheme.primary,
@@ -67,8 +67,8 @@ class ObjetivosPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            '50% do resultado final da sua tatuagem depende dos seus cuidados na cicatrização.',
-                            style: GoogleFonts.inter(
+                            'Respeito absoluto ao tempo da massa, à natureza dos ingredientes e à hora da fornada.',
+                            style: GoogleFonts.plusJakartaSans(
                               fontSize: 12,
                               color: AppTheme.secondaryText,
                               height: 1.3,
@@ -83,101 +83,71 @@ class ObjetivosPage extends StatelessWidget {
               const SizedBox(height: 24),
 
               Text(
-                'FASES DA CICATRIZAÇÃO',
-                style: GoogleFonts.oswald(
+                'OS 4 PILARES DA NOSSA PADARIA',
+                style: GoogleFonts.plusJakartaSans(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.primary,
-                  letterSpacing: 1.5,
+                  letterSpacing: 1.2,
                 ),
               ),
               const SizedBox(height: 14),
 
-              // Fase 1
-              _buildPhaseCard(
-                phaseNumber: '01',
-                period: 'PRIMEIRAS 48 HORAS',
-                title: 'Proteção & Assepsia Inicial',
-                icon: Icons.shield_outlined,
-                steps: [
-                  'Retire o filme plástico após 2 a 4 horas da sessão.',
-                  'Lave com água corrente fria e sabonete neutro antibacteriano.',
-                  'Seque dando toques leves com papel toalha descartável (nunca esfregue toalha de pano).',
+              // Pilar 1
+              _buildPilarCard(
+                numero: '01',
+                periodo: 'FERMENTO NATURAL (LEVAIN)',
+                titulo: 'Fermentação Longa de até 48 Horas',
+                icone: Icons.eco_outlined,
+                passos: [
+                  'Sem fermentos químicos ou aditivos industriais: apenas farinha, água e micro-organismos vivos.',
+                  'Quebra enzimática do glúten que proporciona uma digestão leve e sabor profundo levemente ácido.',
+                  'Alvéolos abertos e casca dourada caramelizada naturalmente no forno.',
                 ],
               ),
               const SizedBox(height: 14),
 
-              // Fase 2
-              _buildPhaseCard(
-                phaseNumber: '02',
-                period: 'DO 3º AO 14º DIA',
-                title: 'Cicatrização Ativa & Hidratação',
-                icon: Icons.water_drop_outlined,
-                steps: [
-                  'Aplique a pomada cicatrizante recomendada em camada bem fina (3x ao dia).',
-                  'A pele vai descascar naturalmente: JAMAIS puxe ou remova casquinhas.',
-                  'Não coce a região tatuada; se coçar, dê leves tapinhas ao redor.',
+              // Pilar 2
+              _buildPilarCard(
+                numero: '02',
+                periodo: 'O CONCEITO HORAS PÃES',
+                titulo: 'Fornadas Pontuais a Cada Hora',
+                icone: Icons.access_time,
+                passos: [
+                  'Planejamento cronometrado para que os clientes sempre encontrem pão quentinho.',
+                  'Controle térmico de forno de lastro a 240°C com injeção precisa de vapor d\'água.',
+                  'Notificação em tempo real de retirada para clientes que fizeram encomendas prévias.',
                 ],
               ),
               const SizedBox(height: 14),
 
-              // Fase 3
-              _buildPhaseCard(
-                phaseNumber: '03',
-                period: 'DO 15º DIA EM DIANTE',
-                title: 'Fixação do Pigmento & Longevidade',
-                icon: Icons.wb_sunny_outlined,
-                steps: [
-                  'Substitua a pomada por creme hidratante corporal diário.',
-                  'Use protetor solar FPS 50+ sempre que for expor a tatuagem à luz solar.',
-                  'Evite banhos de mar, piscina e sauna até a cicatrização completa (30 dias).',
+              // Pilar 3
+              _buildPilarCard(
+                numero: '03',
+                periodo: 'INGREDIENTES SELECIONADOS',
+                titulo: 'Farinhas Nobres & Manteiga Pura',
+                icone: Icons.verified_outlined,
+                passos: [
+                  'Grãos nobres moídos em moinhos de pedra para preservar o gérmen e as fibras.',
+                  'Manteiga de primeira linha sem gorduras hidrogenadas para os folhados e croissants.',
+                  'Ovos caipiras frescos e frutas da estação para as receitas de confeitaria.',
+                ],
+              ),
+              const SizedBox(height: 14),
+
+              // Pilar 4
+              _buildPilarCard(
+                numero: '04',
+                periodo: 'SUSTENTABILIDADE & COMUNIDADE',
+                titulo: 'Desperdício Zero & Embalagens Ecológicas',
+                icone: Icons.compost_outlined,
+                passos: [
+                  'Pães não vendidos no dia são transformados em farinhas de rosca artesanais e torradas gourmet.',
+                  'Embalagens 100% de papel kraft biodegradável e celulose reciclável.',
+                  'Parceria com cooperativas e produtores rurais locais.',
                 ],
               ),
               const SizedBox(height: 24),
-
-              // Alerta de Proibições
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF241515),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: AppTheme.secondary.withValues(alpha: 0.5)),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.warning_amber_rounded, color: AppTheme.error, size: 24),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'ALERTA IMPORTANTE',
-                            style: GoogleFonts.oswald(
-                              color: AppTheme.error,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Evite consumir alimentos excessivamente gordurosos, frutos do mar e bebidas alcoólicas nas primeiras 48h para prevenir processos inflamatórios.',
-                            style: GoogleFonts.inter(
-                              color: const Color(0xFFE0C4C4),
-                              fontSize: 12,
-                              height: 1.4,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -185,12 +155,12 @@ class ObjetivosPage extends StatelessWidget {
     );
   }
 
-  static Widget _buildPhaseCard({
-    required String phaseNumber,
-    required String period,
-    required String title,
-    required IconData icon,
-    required List<String> steps,
+  Widget _buildPilarCard({
+    required String numero,
+    required String periodo,
+    required String titulo,
+    required IconData icone,
+    required List<String> passos,
   }) {
     return Container(
       width: double.infinity,
@@ -198,7 +168,7 @@ class ObjetivosPage extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.secondaryBackground,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF2E2E38)),
+        border: Border.all(color: const Color(0xFF3B2F24)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,56 +176,61 @@ class ObjetivosPage extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: AppTheme.primary.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppTheme.primary,
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  phaseNumber,
-                  style: GoogleFonts.cinzel(
-                    fontSize: 14,
+                  numero,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.primary,
+                    color: const Color(0xFF18130E),
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
-              Text(
-                period,
-                style: GoogleFonts.oswald(
-                  fontSize: 11,
-                  letterSpacing: 1.2,
-                  color: AppTheme.primary,
-                  fontWeight: FontWeight.bold,
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  periodo,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.primary,
+                    letterSpacing: 1.1,
+                  ),
                 ),
               ),
-              const Spacer(),
-              Icon(icon, color: AppTheme.primary, size: 20),
+              Icon(icone, color: AppTheme.primary, size: 20),
             ],
           ),
           const SizedBox(height: 10),
           Text(
-            title,
-            style: GoogleFonts.cinzel(
-              fontSize: 16,
+            titulo,
+            style: GoogleFonts.fraunces(
+              fontSize: 15,
               fontWeight: FontWeight.bold,
               color: AppTheme.primaryText,
             ),
           ),
-          const SizedBox(height: 10),
-          ...steps.map(
-            (step) => Padding(
-              padding: const EdgeInsets.only(bottom: 6),
+          const SizedBox(height: 12),
+          ...passos.map((passo) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('• ', style: TextStyle(color: AppTheme.primary, fontSize: 14)),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 4),
+                    child: Icon(Icons.circle, size: 6, color: AppTheme.primary),
+                  ),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      step,
-                      style: GoogleFonts.inter(
-                        fontSize: 12.5,
+                      passo,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 12,
                         color: AppTheme.secondaryText,
                         height: 1.4,
                       ),
@@ -263,8 +238,8 @@ class ObjetivosPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );

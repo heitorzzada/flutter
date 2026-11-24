@@ -1,155 +1,142 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/tatuador.dart';
-import '../models/agendamento.dart';
+import '../models/produto.dart';
+import '../models/fornada.dart';
 
 class FirestoreService {
   static final FirestoreService _instance = FirestoreService._internal();
   factory FirestoreService() => _instance;
-  FirestoreService._internal() {
-    _initStreams();
-  }
+  FirestoreService._internal();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  CollectionReference get _tatuadorRef => _firestore.collection('tatuador');
-  CollectionReference get _agendamentoRef => _firestore.collection('agendamento');
+  CollectionReference get _produtoRef => _firestore.collection('produtos_padaria');
+  CollectionReference get _fornadaRef => _firestore.collection('fornadas_padaria');
 
-  final List<Tatuador> _localTatuadores = [];
-  final StreamController<List<Tatuador>> _tatuadoresController = StreamController<List<Tatuador>>.broadcast();
+  final List<Produto> _localProdutos = [];
+  final StreamController<List<Produto>> _produtosController = StreamController<List<Produto>>.broadcast();
+  bool _produtosListenerStarted = false;
 
-  final List<Agendamento> _localAgendamentos = [];
-  final StreamController<List<Agendamento>> _agendamentosController = StreamController<List<Agendamento>>.broadcast();
-
-  bool _initialized = false;
-
-  void _initStreams() {
-    if (_initialized) return;
-    _initialized = true;
-
-    try {
-      _tatuadorRef.snapshots().listen((snapshot) {
-        final list = snapshot.docs.map((doc) => Tatuador.fromFirestore(doc)).toList();
-        _localTatuadores.clear();
-        _localTatuadores.addAll(list);
-        _emitTatuadores();
-      }, onError: (e) {
-        _emitTatuadores();
-      });
-    } catch (_) {
-      _emitTatuadores();
-    }
-
-    try {
-      _agendamentoRef.snapshots().listen((snapshot) {
-        final list = snapshot.docs.map((doc) => Agendamento.fromFirestore(doc)).toList();
-        _localAgendamentos.clear();
-        _localAgendamentos.addAll(list);
-        _emitAgendamentos();
-      }, onError: (e) {
-        _emitAgendamentos();
-      });
-    } catch (_) {
-      _emitAgendamentos();
-    }
-  }
-
-  void _emitTatuadores() {
-    _localTatuadores.sort((a, b) {
-      if (a.criadoEm == null && b.criadoEm == null) return 0;
-      if (a.criadoEm == null) return 1;
-      if (b.criadoEm == null) return -1;
-      return b.criadoEm!.compareTo(a.criadoEm!);
-    });
-    if (!_tatuadoresController.isClosed) {
-      _tatuadoresController.add(List.unmodifiable(_localTatuadores));
-    }
-  }
-
-  void _emitAgendamentos() {
-    _localAgendamentos.sort((a, b) {
-      if (a.criadoEm == null && b.criadoEm == null) return 0;
-      if (a.criadoEm == null) return 1;
-      if (b.criadoEm == null) return -1;
-      return b.criadoEm!.compareTo(a.criadoEm!);
-    });
-    if (!_agendamentosController.isClosed) {
-      _agendamentosController.add(List.unmodifiable(_localAgendamentos));
-    }
-  }
+  final List<Fornada> _localFornadas = [];
+  final StreamController<List<Fornada>> _fornadasController = StreamController<List<Fornada>>.broadcast();
+  bool _fornadasListenerStarted = false;
 
   // ==========================================
-  // ENTIDADE 1: TATUADOR
+  // ENTIDADE 1: PRODUTOS & PÃES DA HORAS PÃES
   // ==========================================
 
-  Stream<List<Tatuador>> streamTatuadores() async* {
-    yield List.unmodifiable(_localTatuadores);
-    yield* _tatuadoresController.stream;
+  Stream<List<Produto>> streamProdutos() async* {
+    // Retorna imediatamente os dados locais para evitar tela de loading infinito
+    yield List.unmodifiable(_localProdutos);
+
+    if (!_produtosListenerStarted) {
+      _produtosListenerStarted = true;
+      _produtoRef.snapshots().listen(
+        (snapshot) {
+          final list = snapshot.docs.map((doc) => Produto.fromFirestore(doc)).toList();
+          list.sort((a, b) {
+            if (a.criadoEm == null && b.criadoEm == null) return 0;
+            if (a.criadoEm == null) return 1;
+            if (b.criadoEm == null) return -1;
+            return b.criadoEm!.compareTo(a.criadoEm!);
+          });
+          _localProdutos
+            ..clear()
+            ..addAll(list);
+          _produtosController.add(List.unmodifiable(_localProdutos));
+        },
+        onError: (e) {
+          // Mantém dados locais sem travar a interface
+          _produtosController.add(List.unmodifiable(_localProdutos));
+        },
+      );
+    }
+
+    yield* _produtosController.stream;
   }
 
-  Future<void> cadastrarTatuador({
+  Future<void> cadastrarProduto({
     required String nome,
-    required String estilo,
-    required String experiencia,
+    required String categoria,
+    required String precoOuFornada,
   }) async {
-    final now = DateTime.now();
-    final newId = DateTime.now().millisecondsSinceEpoch.toString();
-    final novo = Tatuador(
-      id: newId,
+    final novoProduto = Produto(
+      id: 'local_${DateTime.now().millisecondsSinceEpoch}',
       nome: nome.trim(),
-      estilo: estilo.trim(),
-      experiencia: experiencia.trim(),
-      criadoEm: now,
+      categoria: categoria.trim(),
+      precoOuFornada: precoOuFornada.trim(),
+      criadoEm: DateTime.now(),
     );
 
-    _localTatuadores.insert(0, novo);
-    _emitTatuadores();
+    _localProdutos.insert(0, novoProduto);
+    _produtosController.add(List.unmodifiable(_localProdutos));
 
     try {
-      await _tatuadorRef.add({
+      await _produtoRef.add({
         'nome': nome.trim(),
-        'estilo': estilo.trim(),
-        'experiencia': experiencia.trim(),
+        'categoria': categoria.trim(),
+        'preco_ou_fornada': precoOuFornada.trim(),
         'criado_em': FieldValue.serverTimestamp(),
       }).timeout(const Duration(seconds: 2));
     } catch (_) {
-      // Continua com sucesso usando armazenamento sincronizado
+      // Offline ou sem conexão: cache local garante reatividade instantânea
     }
   }
 
   // ==========================================
-  // ENTIDADE 2: AGENDAMENTO
+  // ENTIDADE 2: FORNADAS & PEDIDOS / ENCOMENDAS
   // ==========================================
 
-  Stream<List<Agendamento>> streamAgendamentos() async* {
-    yield List.unmodifiable(_localAgendamentos);
-    yield* _agendamentosController.stream;
+  Stream<List<Fornada>> streamFornadas() async* {
+    yield List.unmodifiable(_localFornadas);
+
+    if (!_fornadasListenerStarted) {
+      _fornadasListenerStarted = true;
+      _fornadaRef.snapshots().listen(
+        (snapshot) {
+          final list = snapshot.docs.map((doc) => Fornada.fromFirestore(doc)).toList();
+          list.sort((a, b) {
+            if (a.criadoEm == null && b.criadoEm == null) return 0;
+            if (a.criadoEm == null) return 1;
+            if (b.criadoEm == null) return -1;
+            return b.criadoEm!.compareTo(a.criadoEm!);
+          });
+          _localFornadas
+            ..clear()
+            ..addAll(list);
+          _fornadasController.add(List.unmodifiable(_localFornadas));
+        },
+        onError: (e) {
+          _fornadasController.add(List.unmodifiable(_localFornadas));
+        },
+      );
+    }
+
+    yield* _fornadasController.stream;
   }
 
-  Future<void> cadastrarAgendamento({
-    required String titulo,
-    required String descricao,
+  Future<void> cadastrarFornada({
+    required String clienteOuResponsavel,
+    required String detalhesItens,
   }) async {
-    final now = DateTime.now();
-    final newId = DateTime.now().millisecondsSinceEpoch.toString();
-    final novo = Agendamento(
-      id: newId,
-      titulo: titulo.trim(),
-      descricao: descricao.trim(),
-      criadoEm: now,
+    final novaFornada = Fornada(
+      id: 'local_${DateTime.now().millisecondsSinceEpoch}',
+      clienteOuResponsavel: clienteOuResponsavel.trim(),
+      detalhesItens: detalhesItens.trim(),
+      criadoEm: DateTime.now(),
     );
 
-    _localAgendamentos.insert(0, novo);
-    _emitAgendamentos();
+    _localFornadas.insert(0, novaFornada);
+    _fornadasController.add(List.unmodifiable(_localFornadas));
 
     try {
-      await _agendamentoRef.add({
-        'titulo': titulo.trim(),
-        'descricao': descricao.trim(),
+      await _fornadaRef.add({
+        'cliente_ou_responsavel': clienteOuResponsavel.trim(),
+        'detalhes_itens': detalhesItens.trim(),
         'criado_em': FieldValue.serverTimestamp(),
       }).timeout(const Duration(seconds: 2));
     } catch (_) {
-      // Continua com sucesso
+      // Offline ou sem conexão: cache local garante reatividade instantânea
     }
   }
 }

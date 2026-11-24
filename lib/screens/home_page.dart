@@ -16,13 +16,13 @@ class HomePage extends StatelessWidget {
       backgroundColor: AppTheme.primaryBackground,
       body: CustomScrollView(
         slivers: [
-          // AppBar Customizada com Estilo de Ateliê de Tatuagem
+          // Header Acolhedor Horas Pães
           SliverAppBar(
-            expandedHeight: 180,
+            expandedHeight: 200,
             floating: false,
             pinned: true,
             backgroundColor: AppTheme.primaryDark,
-            elevation: 4,
+            elevation: 3,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               titlePadding: const EdgeInsets.only(bottom: 16),
@@ -30,21 +30,21 @@ class HomePage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'ANDRÉ DE OLIVEIRA',
-                    style: GoogleFonts.cinzel(
-                      fontSize: 18,
+                    'HORAS PÃES',
+                    style: GoogleFonts.fraunces(
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 2,
                       color: AppTheme.primary,
                     ),
                   ),
                   Text(
-                    'TATTOO ATELIER & STUDIO',
-                    style: GoogleFonts.oswald(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: 2.5,
-                      color: AppTheme.secondaryText,
+                    'PADARIA & CONFEITARIA ARTESANAL',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 2.2,
+                      color: AppTheme.accent,
                     ),
                   ),
                 ],
@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
                   Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF0A0A0C), Color(0xFF1E1E26)],
+                        colors: [Color(0xFF140D08), Color(0xFF281C13)],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -63,18 +63,18 @@ class HomePage extends StatelessWidget {
                   ),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 40),
+                      padding: const EdgeInsets.only(bottom: 44),
                       child: Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
-                          color: AppTheme.primary.withValues(alpha: 0.08),
+                          border: Border.all(color: AppTheme.primary.withValues(alpha: 0.4), width: 1.5),
+                          color: AppTheme.primary.withValues(alpha: 0.12),
                         ),
                         child: const Icon(
-                          Icons.colorize,
+                          Icons.bakery_dining,
                           color: AppTheme.primary,
-                          size: 34,
+                          size: 38,
                         ),
                       ),
                     ),
@@ -84,143 +84,171 @@ class HomePage extends StatelessWidget {
             ),
           ),
 
-          // Conteúdo da Página
+          // Conteúdo Principal
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Faixa de Informações Rápidas
+                  // Destaques de Qualidade
                   Row(
                     children: [
-                      _buildQuickStat(icon: Icons.star, value: '5.0', label: 'Avaliação'),
-                      const SizedBox(width: 12),
-                      _buildQuickStat(icon: Icons.shield, value: '100%', label: 'Biosseguro'),
-                      const SizedBox(width: 12),
-                      _buildQuickStat(icon: Icons.brush, value: 'Autoral', label: 'Blackwork'),
+                      _buildQuickStat(icon: Icons.timer, value: 'A Cada 1h', label: 'Pão Quente'),
+                      const SizedBox(width: 10),
+                      _buildQuickStat(icon: Icons.eco, value: '100%', label: 'Fermentação Natural'),
+                      const SizedBox(width: 10),
+                      _buildQuickStat(icon: Icons.favorite, value: 'Artesanal', label: 'Por Camila & Thaviny'),
                     ],
                   ),
                   const SizedBox(height: 26),
 
-                  // Seção 1: Painel Institucional
+                  // Mensagem de Boas-Vindas
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: AppTheme.secondaryBackground,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFF3B2F24)),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primary.withValues(alpha: 0.15),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.wb_sunny_outlined, color: AppTheme.primary, size: 26),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Aroma inesquecível a cada hora',
+                                style: GoogleFonts.fraunces(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppTheme.primaryText,
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                'Nossas fornadas saem frescas do forno de lastro para a sua mesa.',
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 12,
+                                  color: AppTheme.secondaryText,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 26),
+
+                  // Seção: Gestão da Padaria
                   Text(
-                    'CONHEÇA O ATELIER',
-                    style: GoogleFonts.oswald(
+                    'CARDÁPIO & FORNADAS',
+                    style: GoogleFonts.plusJakartaSans(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: AppTheme.primary,
-                      letterSpacing: 1.5,
+                      letterSpacing: 1.2,
                     ),
                   ),
                   const SizedBox(height: 12),
 
-                  // Cards do Menu Institucional
                   _buildNavTile(
                     context: context,
-                    icon: Icons.person_outline,
-                    title: 'Sobre o Artista',
-                    subtitle: 'Conheça André de Oliveira e seus estilos de traço',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const EquipePage()),
-                      );
-                    },
+                    icon: Icons.breakfast_dining,
+                    title: 'Cardápio de Pães & Doces',
+                    subtitle: 'Acervo de pães de fermentação natural, croissants e doces',
+                    accentColor: AppTheme.primary,
+                    page: const ListaIntegrantePage(),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
 
                   _buildNavTile(
                     context: context,
-                    icon: Icons.health_and_safety_outlined,
-                    title: 'Manual de Cicatrização',
-                    subtitle: 'Orientações pós-sessão para sua tattoo cicatrizar perfeita',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ObjetivosPage()),
-                      );
-                    },
+                    icon: Icons.access_time_filled,
+                    title: 'Horas de Fornadas & Encomendas',
+                    subtitle: 'Acompanhe horários de saída de pão quente e pedidos',
+                    accentColor: AppTheme.secondary,
+                    page: const ListaAtividadePage(),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 26),
+
+                  // Seção: Institucional
+                  Text(
+                    'CONHEÇA A HORAS PÃES',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.primary,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  _buildNavTile(
+                    context: context,
+                    icon: Icons.people_alt_outlined,
+                    title: 'Mestres Padeiras (Camila & Thaviny)',
+                    subtitle: 'Conheça as idealizadoras e fundadoras da padaria',
+                    accentColor: const Color(0xFFFDE68A),
+                    page: const EquipePage(),
+                  ),
+                  const SizedBox(height: 12),
+
+                  _buildNavTile(
+                    context: context,
+                    icon: Icons.grain,
+                    title: 'Tradição & Segredos da Massa',
+                    subtitle: 'Pilares de qualidade, maturação lenta e fermento Levain',
+                    accentColor: const Color(0xFF48BB78),
+                    page: const ObjetivosPage(),
+                  ),
+                  const SizedBox(height: 12),
 
                   _buildNavTile(
                     context: context,
                     icon: Icons.account_tree_outlined,
-                    title: 'Arquitetura & Diagramas',
-                    subtitle: 'Estrutura técnica do sistema e modelagem das entidades',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const DiagramasPage()),
-                      );
-                    },
+                    title: 'Engenharia & Diagramas do Sistema',
+                    subtitle: 'Modelagem técnica e arquitetura de software da padaria',
+                    accentColor: const Color(0xFF63B3ED),
+                    page: const DiagramasPage(),
                   ),
                   const SizedBox(height: 28),
 
-                  // Seção 2: Banco de Dados Cloud Firestore (3º Trimestre)
-                  Row(
-                    children: [
-                      Text(
-                        'BASE DE DADOS FIRESTORE',
-                        style: GoogleFonts.oswald(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.primary,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: AppTheme.primary.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          'TEMPO REAL',
-                          style: GoogleFonts.inter(
-                            fontSize: 10,
-                            color: AppTheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
+                  // Especiais do Forno
+                  Text(
+                    'ESPECIAIS DO DIA',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.primary,
+                      letterSpacing: 1.2,
+                    ),
                   ),
                   const SizedBox(height: 12),
 
-                  // Card Entidade 1: Tatuadores
-                  _buildFirestoreFeatureCard(
-                    context: context,
-                    title: 'Tatuadores do Estúdio',
-                    tag: 'ENTIDADE 1',
-                    desc: 'Acesse o catálogo de tatuadores registrados no Firestore e adicione novos membros à equipe.',
-                    icon: Icons.brush,
-                    buttonLabel: 'Ver Lista de Tatuadores',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ListaIntegrantePage()),
-                      );
-                    },
+                  _buildEspecialCard(
+                    title: 'Sourdough Rústico Tradicional',
+                    desc: 'Fermentação selvagem de 48h, casca crocante e miolo super aerado.',
+                    preco: 'R\$ 19,00',
+                    tag: 'Mais Pedido',
                   ),
-                  const SizedBox(height: 16),
-
-                  // Card Entidade 2: Agendamentos
-                  _buildFirestoreFeatureCard(
-                    context: context,
-                    title: 'Sessões & Agendamentos',
-                    tag: 'ENTIDADE 2',
-                    desc: 'Consulte os agendamentos de tatuagens marcadas em tempo real e crie novos agendamentos.',
-                    icon: Icons.calendar_month,
-                    buttonLabel: 'Ver Quadro de Agendamentos',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ListaAtividadePage()),
-                      );
-                    },
+                  const SizedBox(height: 10),
+                  _buildEspecialCard(
+                    title: 'Croissant Francês de Manteiga',
+                    desc: '27 camadas de massa folhada com manteiga da melhor qualidade.',
+                    preco: 'R\$ 14,50',
+                    tag: 'Fornada das 08h e 16h',
                   ),
                   const SizedBox(height: 24),
                 ],
@@ -232,36 +260,40 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  static Widget _buildQuickStat({
+  Widget _buildQuickStat({
     required IconData icon,
     required String value,
     required String label,
   }) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
         decoration: BoxDecoration(
           color: AppTheme.secondaryBackground,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF282834)),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: const Color(0xFF3B2F24)),
         ),
         child: Column(
           children: [
-            Icon(icon, color: AppTheme.primary, size: 20),
-            const SizedBox(height: 4),
+            Icon(icon, color: AppTheme.primary, size: 22),
+            const SizedBox(height: 6),
             Text(
               value,
-              style: GoogleFonts.cinzel(
-                fontSize: 15,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.fraunces(
+                fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: AppTheme.primaryText,
               ),
             ),
+            const SizedBox(height: 2),
             Text(
               label,
-              style: GoogleFonts.inter(
-                fontSize: 11,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 10,
                 color: AppTheme.secondaryText,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
@@ -270,161 +302,147 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  static Widget _buildNavTile({
+  Widget _buildNavTile({
     required BuildContext context,
     required IconData icon,
     required String title,
     required String subtitle,
-    required VoidCallback onTap,
+    required Color accentColor,
+    required Widget page,
   }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: AppTheme.secondaryBackground,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF2E2E38)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: AppTheme.primary.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(icon, color: AppTheme.primary, size: 22),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.cinzel(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryText,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      color: AppTheme.secondaryText,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: AppTheme.secondaryText,
-              size: 16,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  static Widget _buildFirestoreFeatureCard({
-    required BuildContext context,
-    required String title,
-    required String tag,
-    required String desc,
-    required IconData icon,
-    required String buttonLabel,
-    required VoidCallback onTap,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1B1B22),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => page)),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.primary.withValues(alpha: 0.3)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppTheme.secondaryBackground,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: const Color(0xFF3B2F24)),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+          child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
-                  color: AppTheme.primary.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8),
+                  color: accentColor.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: accentColor.withValues(alpha: 0.3)),
                 ),
-                child: Icon(icon, color: AppTheme.primary, size: 20),
+                child: Icon(icon, color: accentColor, size: 24),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: GoogleFonts.cinzel(
-                        fontSize: 16,
+                      style: GoogleFonts.fraunces(
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.primaryText,
                       ),
                     ),
+                    const SizedBox(height: 3),
                     Text(
-                      tag,
-                      style: GoogleFonts.oswald(
-                        fontSize: 11,
-                        color: AppTheme.primary,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
+                      subtitle,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 12,
+                        color: AppTheme.secondaryText,
                       ),
                     ),
                   ],
                 ),
               ),
+              const Icon(Icons.arrow_forward_ios, color: AppTheme.primary, size: 16),
             ],
           ),
-          const SizedBox(height: 12),
-          Text(
-            desc,
-            style: GoogleFonts.inter(
-              fontSize: 13,
-              color: AppTheme.secondaryText,
-              height: 1.4,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEspecialCard({
+    required String title,
+    required String desc,
+    required String preco,
+    required String tag,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppTheme.primary.withValues(alpha: 0.2)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppTheme.primary.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(10),
             ),
+            child: const Icon(Icons.bakery_dining, color: AppTheme.primary, size: 26),
           ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            height: 44,
-            child: ElevatedButton.icon(
-              onPressed: onTap,
-              icon: const Icon(Icons.arrow_forward, size: 18),
-              label: Text(buttonLabel),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.primary,
-                foregroundColor: Colors.black,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: GoogleFonts.fraunces(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.primaryText,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      preco,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.primary,
+                      ),
+                    ),
+                  ],
                 ),
-                textStyle: GoogleFonts.oswald(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.8,
+                const SizedBox(height: 4),
+                Text(
+                  desc,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 11,
+                    color: AppTheme.secondaryText,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primary.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    tag,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.primary,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -12,28 +12,28 @@ class CadastroAtividadePage extends StatefulWidget {
 
 class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
   final _formKey = GlobalKey<FormState>();
-  final _tituloController = TextEditingController();
-  final _descricaoController = TextEditingController();
+  final _clienteController = TextEditingController();
+  final _detalhesController = TextEditingController();
 
   final FirestoreService _firestoreService = FirestoreService();
   bool _salvando = false;
 
   @override
   void dispose() {
-    _tituloController.dispose();
-    _descricaoController.dispose();
+    _clienteController.dispose();
+    _detalhesController.dispose();
     super.dispose();
   }
 
-  Future<void> _salvarAgendamento() async {
-    final titulo = _tituloController.text.trim();
-    final descricao = _descricaoController.text.trim();
+  Future<void> _salvarFornada() async {
+    final cliente = _clienteController.text.trim();
+    final detalhes = _detalhesController.text.trim();
 
-    if (titulo.isEmpty || descricao.isEmpty) {
+    if (cliente.isEmpty || detalhes.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Por favor, preencha todos os campos da sessão!',
+            'Por favor, preencha todos os campos da fornada / encomenda!',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: AppTheme.error,
@@ -46,23 +46,22 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
     setState(() => _salvando = true);
 
     try {
-      await _firestoreService.cadastrarAgendamento(
-        titulo: titulo,
-        descricao: descricao,
+      await _firestoreService.cadastrarFornada(
+        clienteOuResponsavel: cliente,
+        detalhesItens: detalhes,
       );
 
-      _tituloController.clear();
-      _descricaoController.clear();
+      _clienteController.clear();
+      _detalhesController.clear();
 
       if (mounted) {
-        // Retorna para a tela de lista passando true para disparar o pop-up
         Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erro ao salvar agendamento: $e'),
+            content: Text('Erro ao salvar fornada: $e'),
             backgroundColor: AppTheme.error,
           ),
         );
@@ -81,15 +80,11 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Novo Agendamento',
-            style: GoogleFonts.cinzel(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.primary,
-            ),
+            'REGISTRAR FORNADA / ENCOMENDA',
+            style: GoogleFonts.fraunces(fontSize: 20, letterSpacing: 1.1),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.primary, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -102,48 +97,48 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Registre uma nova sessão de tatuagem',
+                    'Programar Lote Quente ou Encomenda Especial',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.cinzel(
+                    style: GoogleFonts.fraunces(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.primary,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.primaryText,
                     ),
                   ),
                   const SizedBox(height: 24),
 
-                  // Título / Ideia
+                  // Cliente ou Responsável
                   TextFormField(
-                    controller: _tituloController,
+                    controller: _clienteController,
                     style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Ideia / Nome da Tatuagem',
-                      hintText: 'Ex.: Dragão Oriental no Antebraço',
-                      prefixIcon: Icon(Icons.create, color: AppTheme.primary),
+                      labelText: 'Cliente / Responsável pela Encomenda',
+                      hintText: 'Ex.: Mariana Silva (Café da Manhã) ou Fornada Geral Manhã',
+                      prefixIcon: Icon(Icons.person_pin_outlined, color: AppTheme.primary),
                     ),
                   ),
                   const SizedBox(height: 16),
 
-                  // Descrição / Detalhes
+                  // Detalhes da Fornada
                   TextFormField(
-                    controller: _descricaoController,
+                    controller: _detalhesController,
                     maxLines: 3,
                     style: const TextStyle(color: AppTheme.primaryText),
                     decoration: const InputDecoration(
-                      labelText: 'Detalhes da Sessão',
-                      hintText: 'Ex.: Tamanho 15cm, sombreado preto e cinza, cliente André.',
+                      labelText: 'Pães, Quantidades & Horário de Retirada',
+                      hintText: 'Ex.: 3x Sourdough Multigrãos + 5x Croissants Manteiga. Retirada às 08h30.',
                       alignLabelWithHint: true,
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(bottom: 40),
-                        child: Icon(Icons.notes, color: AppTheme.primary),
+                        child: Icon(Icons.schedule_outlined, color: AppTheme.primary),
                       ),
                     ),
                   ),
                   const SizedBox(height: 32),
 
-                  // Botão Salvar
+                  // Botão Salvar Fornada
                   ElevatedButton(
-                    onPressed: _salvando ? null : _salvarAgendamento,
+                    onPressed: _salvando ? null : _salvarFornada,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: AppTheme.primary,
@@ -155,16 +150,16 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
                             width: 22,
                             child: CircularProgressIndicator(
                               strokeWidth: 2.5,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF18130E)),
                             ),
                           )
                         : Text(
-                            'Salvar Agendamento',
-                            style: GoogleFonts.oswald(
-                              fontSize: 18,
+                            'CONFIRMAR FORNADA / ENCOMENDA',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              letterSpacing: 1,
+                              letterSpacing: 0.5,
+                              color: const Color(0xFF18130E),
                             ),
                           ),
                   ),
@@ -175,18 +170,18 @@ class _CadastroAtividadePageState extends State<CadastroAtividadePage> {
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.list, color: AppTheme.primary),
                     label: Text(
-                      'Ver Lista de Agendamentos',
-                      style: GoogleFonts.oswald(
+                      'VER QUADRO DE FORNADAS',
+                      style: GoogleFonts.plusJakartaSans(
                         color: AppTheme.primary,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: AppTheme.primary),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                   ),

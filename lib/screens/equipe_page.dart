@@ -11,8 +11,8 @@ class EquipePage extends StatelessWidget {
       backgroundColor: AppTheme.primaryBackground,
       appBar: AppBar(
         title: Text(
-          'Sobre o Artista',
-          style: GoogleFonts.cinzel(
+          'Mestres Padeiras',
+          style: GoogleFonts.fraunces(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: AppTheme.primary,
@@ -29,7 +29,7 @@ class EquipePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Badge de Status
+              // Badge de Status da Equipe
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                 decoration: BoxDecoration(
@@ -50,12 +50,12 @@ class EquipePage extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'RESPONSÁVEL PELO PROJETO & ESTÚDIO',
-                      style: GoogleFonts.oswald(
+                      'AUTORAS & FUNDADORAS DO PROJETO',
+                      style: GoogleFonts.plusJakartaSans(
                         color: AppTheme.primary,
-                        fontSize: 12,
+                        fontSize: 11,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2,
+                        letterSpacing: 1.1,
                       ),
                     ),
                   ],
@@ -63,182 +63,67 @@ class EquipePage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Card Principal de André de Oliveira
+              // CARD 1: CAMILA
+              _buildMemberCard(
+                nome: 'Camila',
+                subtitulo: '(Camila & Thaviny)',
+                cargo: 'Mestre Padeira & Confeiteira Chefe',
+                iniciais: 'CA',
+                corDestaque: AppTheme.primary,
+                icone: Icons.bakery_dining,
+                bio: 'Especialista em fermentação selvagem lenta (Levain) com maturação de 48h, hidratação de massas artesanais e viennoiserie tradicional francesa. Apaixonada pela ciência da panificação clássica e criação de sabores exclusivos para a Horas Pães.',
+                habilidades: ['Fermento Natural (Levain)', 'Viennoiserie & Croissant', 'Confeitaria Fina', 'Autólise & Hidratação'],
+              ),
+              const SizedBox(height: 20),
+
+              // CARD 2: THAVINY
+              _buildMemberCard(
+                nome: 'Thaviny',
+                subtitulo: '(Camila & Thaviny)',
+                cargo: 'Gestora de Operações & Mestre de Fornadas',
+                iniciais: 'TH',
+                corDestaque: AppTheme.secondary,
+                icone: Icons.timer,
+                bio: 'Responsável pelo gerenciamento rigoroso do tempo de fornada, seleção de farinhas puras de moinhos parceiros, sustentabilidade de insumos e atendimento acolhedor aos clientes e apreciadores de pão quente.',
+                habilidades: ['Controle de Fornadas Horárias', 'Gestão de Ingredientes Nobres', 'Controle de Qualidade', 'Experiência do Cliente'],
+              ),
+              const SizedBox(height: 24),
+
+              // Card da Parceria e Missão
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(22),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: AppTheme.secondaryBackground,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: AppTheme.primary.withValues(alpha: 0.35)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.35),
-                      blurRadius: 14,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: const Color(0xFF3B2F24)),
                 ),
                 child: Column(
                   children: [
-                    // Avatar Estilizado
-                    Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: AppTheme.primary, width: 2.5),
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF2E2E38), Color(0xFF1A1A22)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'AO',
-                              style: GoogleFonts.cinzel(
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
-                                color: AppTheme.primary,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: const BoxDecoration(
-                            color: AppTheme.primary,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.brush, size: 16, color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Nome
+                    const Icon(Icons.favorite, color: AppTheme.primary, size: 28),
+                    const SizedBox(height: 10),
                     Text(
-                      'André de Oliveira',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.cinzel(
-                        fontSize: 24,
+                      'A Sinergia Horas Pães',
+                      style: GoogleFonts.fraunces(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.primaryText,
-                        letterSpacing: 1.2,
                       ),
                     ),
-                    const SizedBox(height: 4),
-
-                    // Cargo / Função
+                    const SizedBox(height: 6),
                     Text(
-                      'Tatuador Residente, Fundador & Desenvolvedor',
+                      'O projeto Horas Pães une a precisão técnica das receitas de Camila à excelência operacional de Thaviny, trazendo o melhor pão artesanal em horários precisos para a comunidade.',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.oswald(
-                        fontSize: 15,
-                        color: AppTheme.primary,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 0.8,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 12,
+                        color: AppTheme.secondaryText,
+                        height: 1.4,
                       ),
-                    ),
-                    const SizedBox(height: 18),
-
-                    // Chips de Especialidades
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        _buildBadge('Blackwork'),
-                        _buildBadge('Geométrico'),
-                        _buildBadge('Fineline'),
-                        _buildBadge('Pontilhismo'),
-                        _buildBadge('Desenvolvedor Flutter'),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    const Divider(color: Color(0xFF333340), thickness: 1),
-                    const SizedBox(height: 16),
-
-                    // Biografia & Contribuições no Projeto
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'SOBRE O DESENVOLVIMENTO',
-                        style: GoogleFonts.oswald(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.primary,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    _buildContributionItem(
-                      icon: Icons.architecture,
-                      title: 'Arquitetura e Layout do App',
-                      desc: 'Idealização visual, paleta dark/ouro e estruturação das telas.',
-                    ),
-                    const SizedBox(height: 12),
-                    _buildContributionItem(
-                      icon: Icons.storage,
-                      title: 'Integração Cloud Firestore',
-                      desc: 'Modelagem das coleções de Tatuadores e Agendamentos em tempo real.',
-                    ),
-                    const SizedBox(height: 12),
-                    _buildContributionItem(
-                      icon: Icons.security,
-                      title: 'Regras de Segurança & Validações',
-                      desc: 'Configuração de regras do Firestore e tratamento de campos obrigatórios.',
-                    ),
-                    const SizedBox(height: 12),
-                    _buildContributionItem(
-                      icon: Icons.palette_outlined,
-                      title: 'Projetos Autorais de Tatuagem',
-                      desc: 'Criação de identidade visual autoral e conceitos de tatuagem personalizada.',
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Card de Contato
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-                decoration: BoxDecoration(
-                  color: AppTheme.surfaceColor,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFF333342)),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.alternate_email, color: AppTheme.primary, size: 22),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        '@andre.oliveira.tattoo',
-                        style: GoogleFonts.inter(
-                          color: AppTheme.primaryText,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'Curitiba - PR',
-                      style: GoogleFonts.inter(
-                        color: AppTheme.secondaryText,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -246,67 +131,129 @@ class EquipePage extends StatelessWidget {
     );
   }
 
-  static Widget _buildBadge(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: const Color(0xFF282834),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFF3D3D4E)),
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.inter(
-          color: AppTheme.primaryText,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-
-  static Widget _buildContributionItem({
-    required IconData icon,
-    required String title,
-    required String desc,
+  Widget _buildMemberCard({
+    required String nome,
+    required String subtitulo,
+    required String cargo,
+    required String iniciais,
+    required Color corDestaque,
+    required IconData icone,
+    required String bio,
+    required List<String> habilidades,
   }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: AppTheme.primary.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(8),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: AppTheme.secondaryBackground,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: corDestaque.withValues(alpha: 0.35)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 5),
           ),
-          child: Icon(icon, size: 18, color: AppTheme.primary),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        ],
+      ),
+      child: Column(
+        children: [
+          // Avatar Estilizado
+          Stack(
+            alignment: Alignment.bottomRight,
             children: [
-              Text(
-                title,
-                style: GoogleFonts.inter(
-                  color: AppTheme.primaryText,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+              Container(
+                width: 90,
+                height: 90,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: corDestaque, width: 2.5),
+                  gradient: LinearGradient(
+                    colors: [const Color(0xFF2E241D), const Color(0xFF18130E)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    iniciais,
+                    style: GoogleFonts.fraunces(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: corDestaque,
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 2),
-              Text(
-                desc,
-                style: GoogleFonts.inter(
-                  color: AppTheme.secondaryText,
-                  fontSize: 12,
-                  height: 1.3,
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: corDestaque,
+                  shape: BoxShape.circle,
                 ),
+                child: Icon(icone, size: 16, color: const Color(0xFF18130E)),
               ),
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: 16),
+
+          Text(
+            nome,
+            style: GoogleFonts.fraunces(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: AppTheme.primaryText,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            cargo,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: corDestaque,
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          Text(
+            bio,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 12,
+              color: AppTheme.secondaryText,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Chips de Habilidades
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
+            children: habilidades.map((habilidade) {
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: corDestaque.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: corDestaque.withValues(alpha: 0.25)),
+                ),
+                child: Text(
+                  habilidade,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.primaryText,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
     );
   }
 }

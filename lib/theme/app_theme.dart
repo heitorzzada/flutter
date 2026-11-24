@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Paleta de Cores Premium para Estúdio de Tatuagem (Dark / Ouro / Carmesim)
-  static const Color primary = Color(0xFFD4AF37); // Ouro envelhecido metálico
-  static const Color primaryDark = Color(0xFF141416); // Preto carbono
-  static const Color secondary = Color(0xFFA31D1D); // Carmesim tinta
-  static const Color accent = Color(0xFFE5C158); // Ouro claro
-  static const Color primaryBackground = Color(0xFF121214); // Fundo escuro fosco
-  static const Color secondaryBackground = Color(0xFF1E1E24); // Fundo dos cards escuro
-  static const Color surfaceColor = Color(0xFF282830); // Superfície elevada
-  static const Color primaryText = Color(0xFFF5F5F7); // Branco leve
-  static const Color secondaryText = Color(0xFFA8A8B4); // Cinza médio
+  // Paleta Artesanal Horas Pães: Tons de trigo dourado, madeira tostada e manteiga cremosa
+  static const Color primary = Color(0xFFE59838); // Âmbar Dourado / Crosta de Pão
+  static const Color primaryDark = Color(0xFF120E0A); // Café Tostado Profundo
+  static const Color secondary = Color(0xFFD96B43); // Terracota Quente / Canela
+  static const Color accent = Color(0xFFFDE68A); // Manteiga / Creme de Trigo
+  static const Color primaryBackground = Color(0xFF18130E); // Madeira Rústica Escura
+  static const Color secondaryBackground = Color(0xFF241D17); // Forno / Card Rústico
+  static const Color surfaceColor = Color(0xFF2E251E); // Superfície Elevada
+  static const Color primaryText = Color(0xFFFFF9F2); // Creme Quente Acolhedor
+  static const Color secondaryText = Color(0xFFBFAFA2); // Trigo Aveludado
   static const Color alternate = Colors.white;
   static const Color error = Color(0xFFFF5963);
-  static const Color success = Color(0xFF2ECC71);
+  static const Color success = Color(0xFF48BB78); // Verde Erva Fresca
 
   static ThemeData get themeData {
     return ThemeData(
@@ -32,62 +32,63 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         backgroundColor: primaryDark,
         foregroundColor: primary,
-        elevation: 3,
+        elevation: 2,
         centerTitle: false,
-        titleTextStyle: GoogleFonts.cinzel(
+        titleTextStyle: GoogleFonts.fraunces(
           color: primary,
           fontSize: 22,
           fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
+          letterSpacing: 1.1,
         ),
       ),
       cardTheme: CardThemeData(
         color: secondaryBackground,
         elevation: 3,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: Color(0xFF2E2E38)),
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: Color(0xFF3B2F24)),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primary,
-          foregroundColor: Colors.black,
+          foregroundColor: const Color(0xFF18130E),
+          elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: GoogleFonts.oswald(
+          textStyle: GoogleFonts.plusJakartaSans(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            letterSpacing: 1,
+            letterSpacing: 0.5,
           ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: secondaryBackground,
-        labelStyle: GoogleFonts.inter(
+        labelStyle: GoogleFonts.plusJakartaSans(
           color: secondaryText,
           fontSize: 14,
         ),
-        hintStyle: GoogleFonts.inter(
+        hintStyle: GoogleFonts.plusJakartaSans(
           color: secondaryText.withValues(alpha: 0.6),
           fontSize: 14,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF333340)),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Color(0xFF3B2F24)),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF333340)),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Color(0xFF3B2F24)),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: error, width: 1.5),
         ),
       ),

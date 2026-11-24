@@ -11,8 +11,8 @@ class DiagramasPage extends StatelessWidget {
       backgroundColor: AppTheme.primaryBackground,
       appBar: AppBar(
         title: Text(
-          'Arquitetura do Sistema',
-          style: GoogleFonts.cinzel(
+          'Engenharia do Sistema',
+          style: GoogleFonts.fraunces(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: AppTheme.primary,
@@ -46,7 +46,7 @@ class DiagramasPage extends StatelessWidget {
                         color: AppTheme.primary.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.developer_mode, color: AppTheme.primary, size: 24),
+                      child: const Icon(Icons.schema_outlined, color: AppTheme.primary, size: 24),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -54,17 +54,17 @@ class DiagramasPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'ENGENHARIA DO APP',
-                            style: GoogleFonts.oswald(
+                            'SISTEMA DE GESTÃO HORAS PÃES',
+                            style: GoogleFonts.plusJakartaSans(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: AppTheme.primary,
-                              letterSpacing: 1.5,
+                              letterSpacing: 1.2,
                             ),
                           ),
                           Text(
-                            'Diagramas técnicos baseados nas diretrizes do projeto integrador.',
-                            style: GoogleFonts.inter(
+                            'Modelagem técnica desenvolvida por Camila e Thaviny.',
+                            style: GoogleFonts.plusJakartaSans(
                               fontSize: 12,
                               color: AppTheme.secondaryText,
                             ),
@@ -79,7 +79,7 @@ class DiagramasPage extends StatelessWidget {
 
               Text(
                 '1. DIAGRAMA DE CASOS DE USO',
-                style: GoogleFonts.oswald(
+                style: GoogleFonts.plusJakartaSans(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.primary,
@@ -88,79 +88,58 @@ class DiagramasPage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
 
-              // Card Caso de Uso
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: AppTheme.secondaryBackground,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFF2E2E38)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.person, color: AppTheme.primary, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Atores & Interações',
-                          style: GoogleFonts.cinzel(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.primaryText,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    _buildUseCaseRow('Cliente', 'Acessa informações sobre o tatuador e manual de cicatrização.'),
-                    _buildUseCaseRow('Cliente', 'Registra solicitações de agendamento de tattoo (Entidade 2).'),
-                    _buildUseCaseRow('Tatuador / Admin', 'Cadastra novos artistas e especialidades no estúdio (Entidade 1).'),
-                    _buildUseCaseRow('Sistema', 'Sincroniza registros em tempo real via Cloud Firestore.'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              Text(
-                '2. DIAGRAMA DE CLASSES & FIRESTORE',
-                style: GoogleFonts.oswald(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.primary,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              const SizedBox(height: 10),
-
-              // Card Classe 1: Tatuador
-              _buildClassCard(
-                className: 'Tatuador',
-                collectionName: 'tatuador',
-                fields: [
-                  {'name': 'id', 'type': 'String', 'desc': 'Identificador único do documento'},
-                  {'name': 'nome', 'type': 'String', 'desc': 'Nome do artista/tatuador'},
-                  {'name': 'estilo', 'type': 'String', 'desc': 'Especialidade (Blackwork, Fineline...)'},
-                  {'name': 'experiencia', 'type': 'String', 'desc': 'Tempo de atuação ou rede social'},
-                  {'name': 'criado_em', 'type': 'Timestamp', 'desc': 'Data e hora do cadastro no servidor'},
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              // Card Classe 2: Agendamento
-              _buildClassCard(
-                className: 'Agendamento',
-                collectionName: 'agendamento',
-                fields: [
-                  {'name': 'id', 'type': 'String', 'desc': 'Identificador único do documento'},
-                  {'name': 'titulo', 'type': 'String', 'desc': 'Ideia ou nome da tatuagem'},
-                  {'name': 'descricao', 'type': 'String', 'desc': 'Detalhes da sessão, tamanho e local'},
-                  {'name': 'criado_em', 'type': 'Timestamp', 'desc': 'Data e hora do cadastro no servidor'},
+              _buildDiagramCard(
+                title: 'Casos de Uso da Padaria Horas Pães',
+                itens: [
+                  'Ator: Mestre Padeira (Camila) -> Cadastrar novo pão no cardápio, definir horários de fermentação.',
+                  'Ator: Gestora de Fornadas (Thaviny) -> Registrar lote de fornada, confirmar retirada de pão quente.',
+                  'Ator: Cliente / Balcão -> Consultar cardápio artesanal, reservar encomenda, receber aviso de pão saindo do forno.',
                 ],
               ),
               const SizedBox(height: 20),
+
+              Text(
+                '2. DIAGRAMA DE CLASSES & DADOS',
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.primary,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              _buildDiagramCard(
+                title: 'Entidades do Software',
+                itens: [
+                  'Produto: id (String), nome (String), categoria (String), precoOuFornada (String), criadoEm (DateTime).',
+                  'Fornada: id (String), clienteOuResponsavel (String), detalhesItens (String), criadoEm (DateTime).',
+                  'FirestoreService: Singleton com streaming reativo bidirecional, fallback local sem bloqueio de rede.',
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              Text(
+                '3. FLUXO OPERACIONAL DE FORNADAS',
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.primary,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              _buildDiagramCard(
+                title: 'Ciclo do Pedido à Mesa',
+                itens: [
+                  'Passo 1: Autólise e fermentação longa (48h de maturação).',
+                  'Passo 2: Modelagem manual e descanso das massas.',
+                  'Passo 3: Forno de lastro com injeção de vapor a cada hora.',
+                  'Passo 4: Registro da fornada no app e liberação imediata para retirada no balcão.',
+                ],
+              ),
+              const SizedBox(height: 24),
             ],
           ),
         ),
@@ -168,126 +147,55 @@ class DiagramasPage extends StatelessWidget {
     );
   }
 
-  static Widget _buildUseCaseRow(String actor, String action) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            decoration: BoxDecoration(
-              color: AppTheme.primary.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              actor,
-              style: GoogleFonts.inter(
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.primary,
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              action,
-              style: GoogleFonts.inter(
-                fontSize: 13,
-                color: AppTheme.secondaryText,
-                height: 1.3,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  static Widget _buildClassCard({
-    required String className,
-    required String collectionName,
-    required List<Map<String, String>> fields,
+  Widget _buildDiagramCard({
+    required String title,
+    required List<String> itens,
   }) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: AppTheme.secondaryBackground,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFF2E2E38)),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFF3B2F24)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: AppTheme.primary.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: const Icon(Icons.table_chart_outlined, color: AppTheme.primary, size: 18),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                'Classe $className',
-                style: GoogleFonts.cinzel(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.primaryText,
-                ),
-              ),
-              const Spacer(),
-              Text(
-                'Coleção: $collectionName',
-                style: GoogleFonts.inter(
-                  fontSize: 11,
-                  color: AppTheme.primary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+          Text(
+            title,
+            style: GoogleFonts.fraunces(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: AppTheme.primaryText,
+            ),
           ),
           const SizedBox(height: 12),
-          const Divider(color: Color(0xFF282834), thickness: 1),
-          const SizedBox(height: 8),
-          ...fields.map(
-            (field) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
+          ...itens.map((item) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '+ ${field['name']}',
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryText,
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 4),
+                    child: Icon(Icons.check_circle_outline, size: 14, color: AppTheme.primary),
                   ),
-                  const SizedBox(width: 6),
-                  Text(
-                    ': ${field['type']}',
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      color: AppTheme.primary,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    field['desc']!,
-                    style: GoogleFonts.inter(
-                      fontSize: 11,
-                      color: AppTheme.secondaryText,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      item,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 12,
+                        color: AppTheme.secondaryText,
+                        height: 1.4,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );

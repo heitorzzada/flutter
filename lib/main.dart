@@ -15,16 +15,16 @@ void main() async {
     debugPrint('Nota: Firebase.initializeApp: $e');
   }
 
-  runApp(const AndreTattooStudioApp());
+  runApp(const HorasPaesApp());
 }
 
-class AndreTattooStudioApp extends StatelessWidget {
-  const AndreTattooStudioApp({super.key});
+class HorasPaesApp extends StatelessWidget {
+  const HorasPaesApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'André Tattoo Studio',
+      title: 'Horas Pães - Padaria & Confeitaria Artesanal',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.themeData,
       home: const HomePage(),
